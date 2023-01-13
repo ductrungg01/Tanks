@@ -13,14 +13,18 @@ public class ShellExplosion : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, m_MaxLifeTime);
+        //Destroy(gameObject, m_MaxLifeTime);
+        ObjectPooling.Instance.DestroyGameObject(gameObject, m_MaxLifeTime);
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
         // Find all the tanks in an area around the shell and damage them.
-
+        
+        m_ExplosionParticles.gameObject.SetActive(true);
+        m_ExplosionParticles.gameObject.transform.position = this.transform.position;
+        
         Collider[] colliders = Physics.OverlapSphere(transform.position, m_ExplosionRadius, m_TankMask);
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -46,9 +50,9 @@ public class ShellExplosion : MonoBehaviour
         m_ExplosionParticles.Play();
         
         m_ExplosionAudio.Play();
-        
-        Destroy(m_ExplosionParticles.gameObject, m_ExplosionParticles.duration);
-        Destroy(gameObject);
+
+        ObjectPooling.Instance.DestroyGameObject(m_ExplosionParticles.gameObject, m_ExplosionParticles.duration);
+        ObjectPooling.Instance.DestroyGameObject(gameObject);
     }
 
 
