@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -15,21 +16,16 @@ public class GameManager : MonoBehaviour
     public TankManager[] m_Tanks;           
 
 
-    private int m_RoundNumber;              
-    private WaitForSeconds m_StartWait;     
-    private WaitForSeconds m_EndWait;       
+    private int m_RoundNumber;             
     private TankManager m_RoundWinner;
     private TankManager m_GameWinner;       
 
     private void Start()
     {
-        m_StartWait = new WaitForSeconds(m_StartDelay);
-        m_EndWait = new WaitForSeconds(m_EndDelay);
-
         SpawnAllTanks();
         SetCameraTargets();
-
-        StartCoroutine(GameLoop());
+        
+        GameLoop();
     }
 
 
@@ -57,12 +53,11 @@ public class GameManager : MonoBehaviour
         m_CameraControl.m_Targets = targets;
     }
 
-
-    private IEnumerator GameLoop()
+    async void GameLoop()
     {
-        yield return StartCoroutine(RoundStarting());
-        yield return StartCoroutine(RoundPlaying());
-        yield return StartCoroutine(RoundEnding());
+        await RoundStarting();
+        await RoundPlaying();
+        await RoundEnding();
 
         if (m_GameWinner != null)
         {
@@ -70,12 +65,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(GameLoop());
+            GameLoop();
         }
     }
 
-
-    private IEnumerator RoundStarting()
+    private async UniTask RoundStarting()
     {
         ResetAllTanks();
         DisableTankControl();
@@ -85,11 +79,10 @@ public class GameManager : MonoBehaviour
         m_RoundNumber++;
         m_MessageText.text = "ROUND " + m_RoundNumber;
 
-        yield return m_StartWait;
+        await UniTask.Delay(TimeSpan.FromSeconds(m_StartDelay));
     }
 
-
-    private IEnumerator RoundPlaying()
+    private async UniTask RoundPlaying()
     {
         EnableTankControl();
         
@@ -97,12 +90,11 @@ public class GameManager : MonoBehaviour
 
         while (!OneTankLeft())
         {
-            yield return null;
+            await UniTask.Yield();
         }
     }
-
-
-    private IEnumerator RoundEnding()
+    
+    private async UniTask RoundEnding()
     {
         DisableTankControl();
         
@@ -119,8 +111,8 @@ public class GameManager : MonoBehaviour
 
         string message = EndMessage();
         m_MessageText.text = message;
-        
-        yield return m_EndWait;
+
+        await UniTask.Delay(TimeSpan.FromSeconds(m_EndDelay));
     }
 
 
