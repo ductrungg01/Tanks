@@ -73,12 +73,9 @@ public class TankShooting : MonoBehaviour
         // Instantiate and launch the shell.
         m_Fired = true;
         
-        //Rigidbody shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
-        //GameObject shell = ObjectPooling.Instance.OnTakeFromPool(ObjectPooling.PoolType.Shell1, m_FireTransform.position, m_FireTransform.rotation);
         GameObject shell = PoolManager.Instance.shellPooler.OnTakeFromPool(m_FireTransform.position, m_FireTransform.rotation);
         
-        
-        if (shell != null)
+        if (shell)
         {
             Rigidbody shellInstance = shell.GetComponent<Rigidbody>();
         

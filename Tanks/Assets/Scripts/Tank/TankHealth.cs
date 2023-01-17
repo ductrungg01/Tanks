@@ -3,14 +3,14 @@ using UnityEngine.UI;
 
 public class TankHealth : MonoBehaviour
 {
-    public float m_StartingHealth = 100f;          
+    public float m_StartingHealth = ConfigurationUtil.StartingHealth;          
     public Slider m_Slider;                        
     public Image m_FillImage;                      
     public Color m_FullHealthColor = Color.green;  
     public Color m_ZeroHealthColor = Color.red;    
     public GameObject m_ExplosionPrefab;
-    
-    
+
+
     private AudioSource m_ExplosionAudio;          
     private ParticleSystem m_ExplosionParticles;   
     private float m_CurrentHealth;  
@@ -52,6 +52,8 @@ public class TankHealth : MonoBehaviour
 
     private void SetHealthUI()
     {
+        DataHolderUtil.StrengthRightnow = m_CurrentHealth;
+
         // Set the slider's value appropriately.
         m_Slider.value = m_CurrentHealth;
 

@@ -13,7 +13,6 @@ public class ShellExplosion : MonoBehaviour
 
     private void Start()
     {
-        //ObjectPooling.Instance.OnReturnToPool(gameObject, m_MaxLifeTime);
         PoolManager.Instance.shellPooler.OnReturnToPool(gameObject, m_MaxLifeTime);
     }
 
@@ -50,10 +49,8 @@ public class ShellExplosion : MonoBehaviour
         m_ExplosionParticles.Play();
         
         m_ExplosionAudio.Play();
-
-        //ObjectPooling.Instance.OnReturnToPool(m_ExplosionParticles.gameObject, m_ExplosionParticles.duration);
+        
         PoolManager.Instance.shellPooler.OnReturnToPool(m_ExplosionParticles.gameObject, m_ExplosionParticles.duration);
-        //ObjectPooling.Instance.OnReturnToPool(gameObject);
         PoolManager.Instance.shellPooler.OnReturnToPool(gameObject);
     }
 
