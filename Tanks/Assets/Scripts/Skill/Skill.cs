@@ -14,18 +14,57 @@ public class Skill : MonoBehaviour
         _coolDownEffect = GetComponent<Cooldown>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnClick()
     {
         if (ManaManager.Instance.IsEnoughMana(_manaCost))
         {
             ManaManager.Instance.OnTakeMana(_manaCost);
             _coolDownEffect.StartCooldown();
+            
+            DoSkill();
         }
     }
+
+    void DoSkill()
+    {
+        // TODO: Implement the skill per skill
+        // Implement it in the SkillList below
+    }
+
+    #region SkillList
+
+    void Skill1()
+    {
+        
+    }
+    void Skill2()
+    {
+        
+    }
+    void Skill3()
+    {
+        
+    }
+    void Skill4()
+    {
+        
+    }
+    void Skill5()
+    {
+        
+    }
+    void Skill6()
+    {
+        
+    }
+    void Skill7()
+    {
+        
+    }
+    void Skill8()
+    {
+        
+    }
+
+    #endregion
 }
