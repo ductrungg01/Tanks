@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NormalAttack : MonoBehaviour
+public class LandmineButton : MonoBehaviour
 {
     [SerializeField] private KeyCode shortcutKey;
     
@@ -27,5 +27,4 @@ public class NormalAttack : MonoBehaviour
     {
         // TODO: implement the attack
     }
-
 }

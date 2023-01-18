@@ -17,8 +17,7 @@ public class Landmine : MonoBehaviour
     {
         _explosionParticles = Instantiate(_explosionPrefab).GetComponent<ParticleSystem>();
         _explosionAudio = _explosionParticles.GetComponent<AudioSource>();
-
-        _explosionParticles.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        
         _explosionParticles.gameObject.SetActive(false);
     }
 

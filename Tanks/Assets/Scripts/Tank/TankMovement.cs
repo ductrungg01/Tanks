@@ -67,7 +67,7 @@ public class TankMovement : MonoBehaviour
                 // ... change the clip to idling and play it.
                 m_MovementAudio.clip = m_EngineIdling;
                 m_MovementAudio.pitch = Random.Range (m_OriginalPitch - m_PitchRange, m_OriginalPitch + m_PitchRange);
-                m_MovementAudio.Play ();
+                m_MovementAudio.Play();
             }
         }
         else

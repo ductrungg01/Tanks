@@ -18,9 +18,14 @@ public class TankLandmine : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.L))
         {
-            // TODO: ObjPool the landmine
-            GameObject landmine = Instantiate(_landminePrefab);
-            landmine.transform.position = _landmineTransform.position;
+            PutLandmine();
         }        
+    }
+
+    public void PutLandmine()
+    {
+        // TODO: ObjPool the landmine
+        GameObject landmine = Instantiate(_landminePrefab);
+        landmine.transform.position = _landmineTransform.position;
     }
 }
