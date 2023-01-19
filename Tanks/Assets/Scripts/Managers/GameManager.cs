@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         SpawnAllTanks();
-        SetCameraTargets();
+        //SetCameraTargets();
         
         GameLoop();
     }
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
         
         m_MessageText.text = string.Empty;
 
-        while (!OneTankLeft())
+        while (!NoTankLeft())
         {
             await UniTask.Yield();
         }
@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private bool OneTankLeft()
+    private bool NoTankLeft()
     {
         int numTanksLeft = 0;
 
@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
                 numTanksLeft++;
         }
 
-        return numTanksLeft <= 1;
+        return numTanksLeft <= 0;
     }
     
     private TankManager GetRoundWinner()
