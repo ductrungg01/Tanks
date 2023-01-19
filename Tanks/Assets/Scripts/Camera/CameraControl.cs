@@ -6,7 +6,7 @@ public class CameraControl : MonoBehaviour
     public float m_DampTime = 0.2f;                 
     public float m_ScreenEdgeBuffer = 4f;           
     public float m_MinSize = 6.5f;                  
-    [HideInInspector] public Transform[] m_Targets; 
+    [HideInInspector] public Transform[] m_Targets = new Transform[1]; 
 
 
     private Camera m_Camera;                        
@@ -22,7 +22,6 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
-        m_Targets = new Transform[1];
         m_Targets[0] = GameManager.Instance._Player.transform;
     }
 

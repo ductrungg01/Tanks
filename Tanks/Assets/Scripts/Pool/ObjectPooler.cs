@@ -8,11 +8,10 @@ using UnityEngine;
 public class ObjectPooler : MonoBehaviour
 {
     private GameObject CollapsePollerGO;
-    private List<GameObject> pooledObject;
+    private List<GameObject> pooledObject = new List<GameObject>();
     [SerializeField] private GameObject objectToPool;
     [SerializeField] private int amountToPool;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         CollapsePollerGO = this.gameObject;
@@ -21,6 +20,8 @@ public class ObjectPooler : MonoBehaviour
 
     public void Save()
     {
+        if (objectToPool == null) return;
+
         GameObject go;
         for (int i = 0; i < amountToPool; i++)
         {
