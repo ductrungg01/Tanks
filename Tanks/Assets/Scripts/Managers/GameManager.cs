@@ -33,9 +33,8 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < m_Tanks.Length; i++)
         {
-            m_Tanks[i].m_Instance =
-                Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation);
-            m_Tanks[i].m_PlayerNumber = i + 1;
+            m_Tanks[i]._Instance =
+                Instantiate(m_TankPrefab, m_Tanks[i]._SpawnPoint.position, m_Tanks[i]._SpawnPoint.rotation);
             m_Tanks[i].Setup();
         }
     }
@@ -47,7 +46,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < targets.Length; i++)
         {
-            targets[i] = m_Tanks[i].m_Instance.transform;
+            targets[i] = m_Tanks[i]._Instance.transform;
         }
 
         m_CameraControl.m_Targets = targets;
@@ -104,7 +103,7 @@ public class GameManager : MonoBehaviour
 
         if (m_RoundWinner != null)
         {
-            m_RoundWinner.m_Wins++;
+            m_RoundWinner._Wins++;
         }
 
         m_GameWinner = GetGameWinner();
@@ -122,7 +121,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < m_Tanks.Length; i++)
         {
-            if (m_Tanks[i].m_Instance.activeSelf)
+            if (m_Tanks[i]._Instance.activeSelf)
                 numTanksLeft++;
         }
 
@@ -133,7 +132,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < m_Tanks.Length; i++)
         {
-            if (m_Tanks[i].m_Instance.activeSelf)
+            if (m_Tanks[i]._Instance.activeSelf)
                 return m_Tanks[i];
         }
 
@@ -145,7 +144,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < m_Tanks.Length; i++)
         {
-            if (m_Tanks[i].m_Wins == m_NumRoundsToWin)
+            if (m_Tanks[i]._Wins == m_NumRoundsToWin)
                 return m_Tanks[i];
         }
 
@@ -157,17 +156,17 @@ public class GameManager : MonoBehaviour
         string message = "DRAW!";
 
         if (m_RoundWinner != null)
-            message = m_RoundWinner.m_ColoredPlayerText + " WINS THE ROUND!";
+            message = m_RoundWinner._ColoredPlayerText + " WINS THE ROUND!";
 
         message += "\n\n\n\n";
 
         for (int i = 0; i < m_Tanks.Length; i++)
         {
-            message += m_Tanks[i].m_ColoredPlayerText + ": " + m_Tanks[i].m_Wins + " WINS\n";
+            message += m_Tanks[i]._ColoredPlayerText + ": " + m_Tanks[i]._Wins + " WINS\n";
         }
 
         if (m_GameWinner != null)
-            message = m_GameWinner.m_ColoredPlayerText + " WINS THE GAME!";
+            message = m_GameWinner._ColoredPlayerText + " WINS THE GAME!";
 
         return message;
     }

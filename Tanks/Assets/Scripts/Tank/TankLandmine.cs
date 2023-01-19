@@ -1,22 +1,25 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TankLandmine : MonoBehaviour
 {
-    [SerializeField] private GameObject _landminePrefab;
-    [SerializeField] private Transform _landmineTransform;
-    
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject _LandminePrefab;
+    [SerializeField] private Transform _LandmineTransform;
+    [SerializeField] private KeyCode _ShortcutKey = KeyCode.L;
+
+    private TankInformation _TankInformation;
+
+    private void Start()
     {
-        
+        _TankInformation = GetComponent<TankInformation>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(_ShortcutKey) && _TankInformation._IsPlayer)
         {
             PutLandmine();
         }        
@@ -25,7 +28,7 @@ public class TankLandmine : MonoBehaviour
     public void PutLandmine()
     {
         // TODO: ObjPool the landmine
-        GameObject landmine = Instantiate(_landminePrefab);
-        landmine.transform.position = _landmineTransform.position;
+        GameObject landmine = Instantiate(_LandminePrefab);
+        landmine.transform.position = _LandmineTransform.position;
     }
 }

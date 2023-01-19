@@ -1,69 +1,77 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class TankShooting : MonoBehaviour
 {
-    public int m_PlayerNumber = 1;       
-    public Rigidbody m_Shell;            
-    public Transform m_FireTransform;    
-    public Slider m_AimSlider;           
-    public AudioSource m_ShootingAudio;  
-    public AudioClip m_ChargingClip;     
-    public AudioClip m_FireClip;         
-    public float m_MinLaunchForce = 15f; 
-    public float m_MaxLaunchForce = 30f; 
-    public float m_MaxChargeTime = 0.75f;
+    public Rigidbody _Shell;            
+    public Transform _FireTransform;    
+    public Slider _AimSlider;           
+    public AudioSource _ShootingAudio;  
+    public AudioClip _ChargingClip;     
+    public AudioClip _FireClip;         
+    public float _MinLaunchForce = 15f; 
+    public float _MaxLaunchForce = 30f; 
+    public float _MaxChargeTime = 0.75f;
     
-    private string m_FireButton;         
-    private float m_CurrentLaunchForce;  
-    private float m_ChargeSpeed;         
-    private bool m_Fired;                
+    private string _FireButton;         
+    private float _CurrentLaunchForce;  
+    private float _ChargeSpeed;         
+    private bool _Fired;
+
+    private TankInformation _TankInformation;
 
 
     private void OnEnable()
     {
-        m_CurrentLaunchForce = m_MinLaunchForce;
-        m_AimSlider.value = m_MinLaunchForce;
+        _CurrentLaunchForce = _MinLaunchForce;
+        _AimSlider.value = _MinLaunchForce;
     }
 
 
     private void Start()
     {
-        m_FireButton = "Fire" + m_PlayerNumber;
+        _FireButton = "Fire" + "Player";
 
-        m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
+        _TankInformation = GetComponent<TankInformation>();
+
+        _ChargeSpeed = (_MaxLaunchForce - _MinLaunchForce) / _MaxChargeTime;
     }
 
     private void Update()
     {
-        // Track the current state of the fire button and make decisions based on the current launch force.
-        m_AimSlider.value = m_MinLaunchForce;
-        if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired)
+        if (_TankInformation._IsPlayer)
         {
-            // at max charge and not yet fire
-            m_CurrentLaunchForce = m_MaxLaunchForce;
-            Fire();
-        }
-        else if (Input.GetButtonDown(m_FireButton))
-        {
-            // have we pressed fire for the first time?
-            m_Fired = false;
-            m_CurrentLaunchForce = m_MinLaunchForce;
+            // Track the current state of the fire button and make decisions based on the current launch force.
+            _AimSlider.value = _MinLaunchForce;
+            
+            if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
+            {
+                // at max charge and not yet fire
+                _CurrentLaunchForce = _MaxLaunchForce;
+                Fire();
+            }
+            else if (Input.GetButtonDown(_FireButton))
+            {
+                // have we pressed fire for the first time?
+                _Fired = false;
+                _CurrentLaunchForce = _MinLaunchForce;
 
-            m_ShootingAudio.clip = m_ChargingClip;
-            m_ShootingAudio.Play();
-        }
-        else if (Input.GetButton(m_FireButton) && !m_Fired)
-        {
-            // holding the fire button and not yet fired
-            m_CurrentLaunchForce += m_ChargeSpeed * Time.deltaTime;
+                _ShootingAudio.clip = _ChargingClip;
+                _ShootingAudio.Play();
+            }
+            else if (Input.GetButton(_FireButton) && !_Fired)
+            {
+                // holding the fire button and not yet fired
+                _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
 
-            m_AimSlider.value = m_CurrentLaunchForce;
-        }
-        else if (Input.GetButtonUp(m_FireButton) && !m_Fired)
-        {
-            // we released the button and having not fired yet
-            Fire();
+                _AimSlider.value = _CurrentLaunchForce;
+            }
+            else if (Input.GetButtonUp(_FireButton) && !_Fired)
+            {
+                // we released the button and having not fired yet
+                Fire();
+            }
         }
     }
 
@@ -71,20 +79,20 @@ public class TankShooting : MonoBehaviour
     private void Fire()
     {
         // Instantiate and launch the shell.
-        m_Fired = true;
+        _Fired = true;
         
-        GameObject shell = PoolManager.Instance.shellPooler.OnTakeFromPool(m_FireTransform.position, m_FireTransform.rotation);
+        GameObject shell = PoolManager.Instance.shellPooler.OnTakeFromPool(_FireTransform.position, _FireTransform.rotation);
         
         if (shell)
         {
             Rigidbody shellInstance = shell.GetComponent<Rigidbody>();
         
-            shellInstance.velocity = m_CurrentLaunchForce * m_FireTransform.forward;
+            shellInstance.velocity = _CurrentLaunchForce * _FireTransform.forward;
 
-            m_ShootingAudio.clip = m_FireClip;
-            m_ShootingAudio.Play();
+            _ShootingAudio.clip = _FireClip;
+            _ShootingAudio.Play();
 
-            m_CurrentLaunchForce = m_MinLaunchForce;
+            _CurrentLaunchForce = _MinLaunchForce;
         }
         else
         {
