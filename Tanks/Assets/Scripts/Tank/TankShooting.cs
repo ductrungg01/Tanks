@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class TankShooting : MonoBehaviour
 {
-    public Rigidbody _Shell;            
     public Transform _FireTransform;    
     public Slider _AimSlider;           
     public AudioSource _ShootingAudio;  
