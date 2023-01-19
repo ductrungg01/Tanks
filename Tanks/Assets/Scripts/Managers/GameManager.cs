@@ -7,6 +7,11 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+    
+    [SerializeField] private GameObject _PlayerPrefabs;
+    [HideInInspector] public GameObject _Player;
+    
     public int m_NumRoundsToWin = 5;        
     public float m_StartDelay = 3f;         
     public float m_EndDelay = 3f;           
@@ -14,14 +19,20 @@ public class GameManager : MonoBehaviour
     public Text m_MessageText;              
     public GameObject m_TankPrefab;         
     public TankManager[] m_Tanks;           
-
-
+    
     private int m_RoundNumber;             
     private TankManager m_RoundWinner;
-    private TankManager m_GameWinner;       
+    private TankManager m_GameWinner;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
+        _Player = Instantiate(_PlayerPrefabs);
+        
         SpawnAllTanks();
         //SetCameraTargets();
         
