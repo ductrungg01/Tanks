@@ -15,9 +15,15 @@ public class EnemyShooting : MonoBehaviour
     public AudioSource _ShootingAudio;
     public AudioClip _FireClip;
 
-    private float _Cooldown = 3f;
-    private float _CooldownRemain = 0;
-    
+    private float _CooldownMin = 2f;
+    private float _CooldownMax = 5f;
+    private float _CooldownRemain;
+
+    private void Start()
+    {
+        _CooldownRemain = Random.Range(_CooldownMin, _CooldownMax);
+    }
+
     private void Update()
     {
         if (_CooldownRemain > 0)
@@ -25,7 +31,7 @@ public class EnemyShooting : MonoBehaviour
             _CooldownRemain -= Time.deltaTime;
         } else
         {
-            _CooldownRemain = _Cooldown;
+            _CooldownRemain = Random.Range(_CooldownMin, _CooldownMax);
             Fire();
         }
     }

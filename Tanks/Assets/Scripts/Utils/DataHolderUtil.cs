@@ -4,21 +4,12 @@ using UnityEngine;
 
 public static class DataHolderUtil
 {
-    // Health
-    private static float _strengthRightnow;
-
     // Mana
-    private static float _manaRightnow;
-    
-    public static float StrengthRightnow
-    {
-        get { return _strengthRightnow; }
-        set { _strengthRightnow = value; }
-    }
-    
+    private static float _ManaRightnow;
     public static float ManaRightnow
     {
-        get { return _manaRightnow; }
-        set { _manaRightnow = Mathf.Min(value, ConfigurationUtil.MaxMana); }
+        get { return _ManaRightnow; }
+        set { _ManaRightnow = Mathf.Min(value, ConfigurationUtil.MaxMana); }
     }
+    
 }

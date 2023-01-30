@@ -6,7 +6,7 @@ public class CameraControl : MonoBehaviour
     public float m_DampTime = 0.2f;                 
     public float m_ScreenEdgeBuffer = 4f;           
     public float m_MinSize = 6.5f;                  
-    [HideInInspector] public Transform[] m_Targets = new Transform[1]; 
+    private Transform _PlayerTransform; 
 
 
     private Camera m_Camera;                        
@@ -22,7 +22,7 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
-        m_Targets[0] = GameManager.Instance._Player.transform;
+        _PlayerTransform = GameManager.Instance._Player.transform;
     }
 
     private void FixedUpdate()
@@ -42,21 +42,8 @@ public class CameraControl : MonoBehaviour
 
     private void FindAveragePosition()
     {
-        Vector3 averagePos = new Vector3();
-        int numTargets = 0;
-
-        for (int i = 0; i < m_Targets.Length; i++)
-        {
-            if (!m_Targets[i].gameObject.activeSelf)
-                continue;
-
-            averagePos += m_Targets[i].position;
-            numTargets++;
-        }
-
-        if (numTargets > 0)
-            averagePos /= numTargets;
-
+        Vector3 averagePos = _PlayerTransform.position;
+        
         averagePos.y = transform.position.y;
 
         m_DesiredPosition = averagePos;
@@ -76,21 +63,15 @@ public class CameraControl : MonoBehaviour
         Vector3 desiredLocalPos = transform.InverseTransformPoint(m_DesiredPosition);
 
         float size = 0f;
-
-        for (int i = 0; i < m_Targets.Length; i++)
-        {
-            if (!m_Targets[i].gameObject.activeSelf)
-                continue;
-
-            Vector3 targetLocalPos = transform.InverseTransformPoint(m_Targets[i].position);
-
-            Vector3 desiredPosToTarget = targetLocalPos - desiredLocalPos;
-
-            size = Mathf.Max (size, Mathf.Abs (desiredPosToTarget.y));
-
-            size = Mathf.Max (size, Mathf.Abs (desiredPosToTarget.x) / m_Camera.aspect);
-        }
         
+        Vector3 targetLocalPos = transform.InverseTransformPoint(_PlayerTransform.position);
+
+        Vector3 desiredPosToTarget = targetLocalPos - desiredLocalPos;
+
+        size = Mathf.Max (size, Mathf.Abs (desiredPosToTarget.y));
+
+        size = Mathf.Max (size, Mathf.Abs (desiredPosToTarget.x) / m_Camera.aspect);
+
         size += m_ScreenEdgeBuffer;
 
         size = Mathf.Max(size, m_MinSize);

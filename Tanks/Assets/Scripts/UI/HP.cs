@@ -18,7 +18,7 @@ public class HP : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _slider.value = DataHolderUtil.StrengthRightnow / ConfigurationUtil.StartingHealth;
-        textValue.text = (int)DataHolderUtil.StrengthRightnow + "/" + ConfigurationUtil.StartingHealth;
+        _slider.value = PlayerStatsManager.Instance.HP / ConfigurationUtil.StartingHealth;
+        textValue.text = (int)PlayerStatsManager.Instance.HP + "/" + ConfigurationUtil.StartingHealth;
     }
 }

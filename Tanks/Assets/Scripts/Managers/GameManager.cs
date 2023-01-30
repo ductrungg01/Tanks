@@ -27,15 +27,13 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _Player = Instantiate(_PlayerPrefabs);
     }
 
     private void Start()
     {
-        _Player = Instantiate(_PlayerPrefabs);
-        
         SpawnAllTanks();
-        //SetCameraTargets();
-        
+
         GameLoop();
     }
 
@@ -48,19 +46,6 @@ public class GameManager : MonoBehaviour
                 Instantiate(m_TankPrefab, m_Tanks[i]._SpawnPoint.position, m_Tanks[i]._SpawnPoint.rotation);
             m_Tanks[i].Setup();
         }
-    }
-
-
-    private void SetCameraTargets()
-    {
-        Transform[] targets = new Transform[m_Tanks.Length];
-
-        for (int i = 0; i < targets.Length; i++)
-        {
-            targets[i] = m_Tanks[i]._Instance.transform;
-        }
-
-        m_CameraControl.m_Targets = targets;
     }
 
     async void GameLoop()

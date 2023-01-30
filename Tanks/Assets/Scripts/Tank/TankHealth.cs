@@ -16,10 +16,13 @@ public class TankHealth : MonoBehaviour
     private float _CurrentHealth;  
     private bool _IsDead;
 
+    private TankInformation _TankInformation;
+
     private void Awake()
     {
         _ExplosionParticles = Instantiate(_ExplosionPrefab).GetComponent<ParticleSystem>();
         _ExplosionAudio = _ExplosionParticles.GetComponent<AudioSource>();
+        _TankInformation = GetComponent<TankInformation>();
 
         _ExplosionParticles.gameObject.SetActive(false);
     }
@@ -27,7 +30,12 @@ public class TankHealth : MonoBehaviour
     private void OnEnable()
     {
         _CurrentHealth = _StartingHealth;
-        DataHolderUtil.StrengthRightnow = _CurrentHealth;
+
+        if (_TankInformation._IsPlayer)
+        {
+           PlayerStatsManager.Instance.HP = _CurrentHealth;
+        }
+
         _IsDead = false;
 
         SetHealthUI();
@@ -50,7 +58,10 @@ public class TankHealth : MonoBehaviour
 
     private void SetHealthUI()
     {
-        DataHolderUtil.StrengthRightnow = _CurrentHealth;
+        if (_TankInformation._IsPlayer)
+        {
+            PlayerStatsManager.Instance.HP = _CurrentHealth;
+        }
 
         // Set the slider's value appropriately.
         _Slider.value = _CurrentHealth;

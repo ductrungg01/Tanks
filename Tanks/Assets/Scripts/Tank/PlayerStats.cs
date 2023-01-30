@@ -1,22 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class TankInformation : MonoBehaviour
+public class PlayerStats : MonoBehaviour
 {
     #region Fields
-
-    [Header("General Information")] public bool _IsPlayer = false;
-    
     // Stats
     private float _PlayerSpeed;
     private float _TankMass;
     private float _TankOilRemain;
-    private float _TankOilConsumption = 0.05f;
-
+    private float _TankOilConsumption = 0.15f;
+    
     #endregion
 
     private void Start()
@@ -24,13 +18,25 @@ public class TankInformation : MonoBehaviour
         _PlayerSpeed = ConfigurationUtil.PlayerTankSpeed;
         _TankMass = ConfigurationUtil.TankMass;
         _TankOilRemain = ConfigurationUtil.TankOil;
+
+        SaveStatsForManager();
     }
 
     private void FixedUpdate()
     {
-        TankOilRemain -= _TankOilConsumption;
+        TankOilRemain -= _TankOilConsumption / 50;
 
-        PlayerSpeed = ((TankMass - TankOilRemain) / TankMass) * ConfigurationUtil.PlayerTankSpeed;
+        PlayerSpeed = ((TankMass - TankOilRemain * 10) / TankMass) * ConfigurationUtil.PlayerTankSpeed;
+
+        SaveStatsForManager();
+    }
+
+    void SaveStatsForManager()
+    {
+        PlayerStatsManager.Instance.PlayerSpeed = _PlayerSpeed;
+        PlayerStatsManager.Instance.TankMass = _TankMass;
+        PlayerStatsManager.Instance.TankOilRemain = _TankOilRemain;
+        PlayerStatsManager.Instance.TankOilConsumption = _TankOilConsumption;
     }
 
     #region Propertises

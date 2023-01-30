@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Skill : MonoBehaviour
 {
     [SerializeField] private int _manaCost;
+    [SerializeField] private int _SkillID;
     private Cooldown _coolDownEffect;
     
     // Start is called before the first frame update
@@ -27,8 +28,24 @@ public class Skill : MonoBehaviour
 
     void DoSkill()
     {
-        // TODO: Implement the skill per skill
-        // Implement it in the SkillList below
+        switch (_SkillID)
+        {
+            case 1:
+            {
+                Skill1();
+                break;
+            }
+            case 2:
+            {
+                Skill2();
+                break;
+            }
+            case 3:
+            {
+                Skill3();
+                break;
+            }
+        }
     }
 
     #region SkillList
@@ -42,26 +59,6 @@ public class Skill : MonoBehaviour
         
     }
     void Skill3()
-    {
-        
-    }
-    void Skill4()
-    {
-        
-    }
-    void Skill5()
-    {
-        
-    }
-    void Skill6()
-    {
-        
-    }
-    void Skill7()
-    {
-        
-    }
-    void Skill8()
     {
         
     }

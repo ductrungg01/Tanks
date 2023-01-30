@@ -3,7 +3,6 @@ using UnityEngine.Serialization;
 
 public class TankMovement : MonoBehaviour
 {
-    public float _Speed = 12f;            
     public float _TurnSpeed = 180f;       
     public AudioSource _MovementAudio;    
     public AudioClip _EngineIdling;       
@@ -123,7 +122,7 @@ public class TankMovement : MonoBehaviour
     {
         // Adjust the position of the tank based on the player's input.
         // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-        Vector3 movement = transform.forward * _MovementInputValue * _Speed * Time.deltaTime;
+        Vector3 movement = transform.forward * _MovementInputValue * PlayerStatsManager.Instance.PlayerSpeed * Time.deltaTime;
 
         // Apply this movement to the rigidbody's position.
         _Rigidbody.MovePosition(_Rigidbody.position + movement);
