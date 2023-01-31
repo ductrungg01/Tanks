@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class TankHealth : MonoBehaviour
 {
-    public float _StartingHealth = ConfigurationUtil.StartingHealth;          
+    public float _StartingHealth;          
     public Slider _Slider;                        
     public Image _FillImage;                      
     public Color _FullHealthColor = Color.green;  
@@ -23,28 +26,51 @@ public class TankHealth : MonoBehaviour
         _ExplosionParticles = Instantiate(_ExplosionPrefab).GetComponent<ParticleSystem>();
         _ExplosionAudio = _ExplosionParticles.GetComponent<AudioSource>();
         _TankInformation = GetComponent<TankInformation>();
-
+        
         _ExplosionParticles.gameObject.SetActive(false);
+        
+        _StartingHealth = ConfigurationUtil.StartingHealth;
+
+        if (_TankInformation._IsPlayer)
+        {
+            _FullHealthColor = Color.green;  
+            _ZeroHealthColor = Color.red; 
+        }
+        else
+        {
+            _FullHealthColor = Color.magenta;  
+            _ZeroHealthColor = Color.red; 
+        }
     }
     
     private void OnEnable()
     {
         _CurrentHealth = _StartingHealth;
 
-        if (_TankInformation._IsPlayer)
-        {
-           PlayerStatsManager.Instance.HP = _CurrentHealth;
-        }
-
         _IsDead = false;
 
         SetHealthUI();
+    }
+
+    private void Update()
+    {
+        if (_TankInformation._IsPlayer)
+        {
+            _CurrentHealth = PlayerStatsManager.Instance.HP;
+            SetHealthUI ();
+            //Debug.Log("Player Health: " + _CurrentHealth);
+        }
     }
 
     public void TakeDamage(float amount)
     {
         // Reduce current health by the amount of damage done.
         _CurrentHealth -= amount;
+        if (_TankInformation._IsPlayer)
+        {
+            PlayerStats playerStats = GetComponent<PlayerStats>();
+            playerStats.HP = (int)_CurrentHealth;
+        }
 
         // Change the UI elements appropriately.
         SetHealthUI ();
@@ -58,11 +84,6 @@ public class TankHealth : MonoBehaviour
 
     private void SetHealthUI()
     {
-        if (_TankInformation._IsPlayer)
-        {
-            PlayerStatsManager.Instance.HP = _CurrentHealth;
-        }
-
         // Set the slider's value appropriately.
         _Slider.value = _CurrentHealth;
 

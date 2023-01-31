@@ -49,23 +49,33 @@ public class PlayerStats : MonoBehaviour
     }
 
     #region Propertises
-
     public float PlayerSpeed
     {
         get { return _PlayerSpeed; }
-        set { _PlayerSpeed = value; }
+        set
+        {
+            if (value < 0) value = 0;
+            _PlayerSpeed = value;
+        }
     }
     public float TankMass
     {
         get { return _TankMass; }
-        set { _TankMass = value; }
+        set
+        {
+            if (value < 0) value = 0;
+            _TankMass = value;
+        }
     }
     public float TankOilRemain
     {
         get { return _TankOilRemain; }
-        set { _TankOilRemain = value; }
+        set
+        {
+            if (value < 0) value = 0;
+            _TankOilRemain = value;
+        }
     }
-
     public int Defend
     {
         get { return _Defend; }
@@ -77,16 +87,10 @@ public class PlayerStats : MonoBehaviour
         get { return _HP; }
         set
         {
+            if (value < 0) value = 0;
             _HP = value;
 
-            _HP = Mathf.Max(0, _HP);
-            //_HP = Mathf.Min((int)ConfigurationUtil.StartingHealth, _HP);
-            
-            if (_TankInformation._IsPlayer)
-            {
-                TankHealth health = GetComponent<TankHealth>();
-                health.CurrentHealth = _HP;
-            }
+            _HP = Mathf.Min(_HP, (int)ConfigurationUtil.StartingHealth);
         }
     }
     

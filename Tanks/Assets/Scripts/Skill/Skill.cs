@@ -8,11 +8,13 @@ public class Skill : MonoBehaviour
     [SerializeField] private int _manaCost;
     [SerializeField] private int _SkillID;
     private Cooldown _coolDownEffect;
+    private PlayerStats _PlayerStats;
     
     // Start is called before the first frame update
     void Start()
     {
         _coolDownEffect = GetComponent<Cooldown>();
+        _PlayerStats = FindObjectOfType<PlayerStats>();
     }
 
     public void OnClick()
@@ -52,11 +54,11 @@ public class Skill : MonoBehaviour
 
     void Skill1()
     {
-        
+        _PlayerStats.Defend += 5;
     }
     void Skill2()
     {
-        
+        _PlayerStats.HP += 20;
     }
     void Skill3()
     {

@@ -14,7 +14,7 @@ public static class ConfigurationUtil
     
     // Speed 
     private static float _PlayerTankSpeed = 12f;
-    private static float _EnemyTankSpeed = 2.5f;
+    private static float _EnemyTankSpeed = 3f;
     
     // Mass
     private static float _TankMass = 10000f;
@@ -22,6 +22,8 @@ public static class ConfigurationUtil
     // Petro
     private static float _TankOil = 100f;
     
+    // Defend
+    private static int _Defend = 132;
 
     public static float StartingHealth
     {
@@ -61,5 +63,10 @@ public static class ConfigurationUtil
     public static float TankOil
     {
         get { return _TankOil; }
+    }
+    
+    public static int Defend
+    {
+        get { return _Defend; }
     }
 }

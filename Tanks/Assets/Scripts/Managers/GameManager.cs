@@ -36,8 +36,7 @@ public class GameManager : MonoBehaviour
 
         GameLoop();
     }
-
-
+    
     private void SpawnAllTanks()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
@@ -110,18 +109,18 @@ public class GameManager : MonoBehaviour
         await UniTask.Delay(TimeSpan.FromSeconds(m_EndDelay));
     }
 
-
     private bool NoTankLeft()
     {
-        int numTanksLeft = 0;
+        // int numTanksLeft = 0;
+        //
+        // for (int i = 0; i < m_Tanks.Length; i++)
+        // {
+        //     if (m_Tanks[i]._Instance.activeSelf)
+        //         numTanksLeft++;
+        // }
 
-        for (int i = 0; i < m_Tanks.Length; i++)
-        {
-            if (m_Tanks[i]._Instance.activeSelf)
-                numTanksLeft++;
-        }
-
-        return numTanksLeft <= 0;
+        return false;
+        //return numTanksLeft <= 0;
     }
     
     private TankManager GetRoundWinner()
@@ -134,8 +133,7 @@ public class GameManager : MonoBehaviour
 
         return null;
     }
-
-
+    
     private TankManager GetGameWinner()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
@@ -175,7 +173,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     private void EnableTankControl()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
@@ -183,7 +180,6 @@ public class GameManager : MonoBehaviour
             m_Tanks[i].EnableControl();
         }
     }
-
 
     private void DisableTankControl()
     {

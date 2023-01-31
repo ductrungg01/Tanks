@@ -36,8 +36,8 @@ public class TankManager
 
     public void DisableControl()
     {
-        _Movement.enabled = false;
-        _Shooting.enabled = false;
+       // _Movement.enabled = false;
+       // _Shooting.enabled = false;
 
         _CanvasGameObject.SetActive(false);
     }
@@ -45,8 +45,8 @@ public class TankManager
 
     public void EnableControl()
     {
-        _Movement.enabled = true;
-        _Shooting.enabled = true;
+        //_Movement.enabled = true;
+        //_Shooting.enabled = true;
 
         _CanvasGameObject.SetActive(true);
     }

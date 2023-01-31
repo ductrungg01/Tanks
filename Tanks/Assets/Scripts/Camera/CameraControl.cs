@@ -42,6 +42,7 @@ public class CameraControl : MonoBehaviour
 
     private void FindAveragePosition()
     {
+        _PlayerTransform = GameManager.Instance._Player.transform;
         Vector3 averagePos = _PlayerTransform.position;
         
         averagePos.y = transform.position.y;

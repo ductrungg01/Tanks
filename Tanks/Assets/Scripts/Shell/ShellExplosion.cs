@@ -40,8 +40,11 @@ public class ShellExplosion : MonoBehaviour
                 continue;
 
             float damage = CalculateDamage(targetRigidbody.position);
-            
-            targetHealth.TakeDamage(damage);
+
+            if (damage != 0)
+            {
+                targetHealth.TakeDamage(damage);
+            }
         }
 
         m_ExplosionParticles.transform.parent = null;
@@ -64,6 +67,7 @@ public class ShellExplosion : MonoBehaviour
 
         float relativeDistance = (m_ExplosionRadius - explosionDistance) / m_ExplosionRadius;
 
+        //float damage = relativeDistance * m_MaxDamage;
         float damage = relativeDistance * m_MaxDamage;
 
         damage = Mathf.Max(0f, damage);
