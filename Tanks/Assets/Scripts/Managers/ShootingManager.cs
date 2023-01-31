@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class ShootingManager : MonoBehaviour
 {
     private ShootingType _TypeInUse;
-    private int[] _NumBulletRemain = new int[4];
+    private const int numOfShootingType = 4;
+    private int[] _NumBulletRemain = new int[numOfShootingType];
 
     private void Start()
     {

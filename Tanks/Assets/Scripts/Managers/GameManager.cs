@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
 
     private bool IsPlayerDead()
     {
+        return false;
         return _Player.activeSelf;
     }
     

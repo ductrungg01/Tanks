@@ -39,7 +39,14 @@ public class ShellExplosion : MonoBehaviour
             if (!targetHealth)
                 continue;
 
-            float damage = CalculateDamage(targetRigidbody.position);
+            //float damage = CalculateDamage(targetRigidbody.position);
+            
+            float damage = CalculateDamage.Calculate(
+                new ExplosionInfor(this.transform.position, m_ExplosionRadius, m_ExplosionForce),
+                targetRigidbody.position,
+                m_MaxDamage,
+                132
+            );
 
             if (damage != 0)
             {
@@ -58,20 +65,19 @@ public class ShellExplosion : MonoBehaviour
     }
 
 
-    private float CalculateDamage(Vector3 targetPosition)
-    {
-        // Calculate the amount of damage a target should take based on it's position.
-        Vector3 explosionToTarget = targetPosition - transform.position;
-
-        float explosionDistance = explosionToTarget.magnitude;
-
-        float relativeDistance = (m_ExplosionRadius - explosionDistance) / m_ExplosionRadius;
-
-        //float damage = relativeDistance * m_MaxDamage;
-        float damage = relativeDistance * m_MaxDamage;
-
-        damage = Mathf.Max(0f, damage);
-
-        return damage;
-    }
+    // private float CalculateDamage(Vector3 targetPosition)
+    // {
+    //     // Calculate the amount of damage a target should take based on it's position.
+    //     Vector3 explosionToTarget = targetPosition - transform.position;
+    //
+    //     float explosionDistance = explosionToTarget.magnitude;
+    //
+    //     float relativeDistance = (m_ExplosionRadius - explosionDistance) / m_ExplosionRadius;
+    //     
+    //     float damage = relativeDistance * m_MaxDamage;
+    //
+    //     damage = Mathf.Max(0f, damage);
+    //
+    //     return damage;
+    // }
 }
