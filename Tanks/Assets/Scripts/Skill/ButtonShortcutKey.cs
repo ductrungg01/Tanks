@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,19 @@ public class ButtonShortcutKey : MonoBehaviour
 {
     [SerializeField] private KeyCode shortcutKey;
 
+    private Button btn;
+
+    private void Start()
+    {
+        btn = GetComponent<Button>();
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(shortcutKey))
         {
-            GetComponent<Button>().onClick.Invoke();
+            btn.onClick.Invoke();
         }
     }
 }

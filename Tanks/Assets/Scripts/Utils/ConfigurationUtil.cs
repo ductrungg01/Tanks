@@ -25,6 +25,15 @@ public static class ConfigurationUtil
     // Defend
     private static int _Defend = 132;
 
+    // Starting num of bullet/shell every ShootingType
+    private static int[] numsBulletInShootingTypes = new int[4]
+    {
+        300,
+        10000,
+        5,
+        1
+    };
+    
     public static float StartingHealth
     {
         get { return _StartingHealth; }
@@ -68,5 +77,10 @@ public static class ConfigurationUtil
     public static int Defend
     {
         get { return _Defend; }
+    }
+
+    public static int[] NumsOfBulletEveryTypeStarting
+    {
+        get { return numsBulletInShootingTypes; }
     }
 }

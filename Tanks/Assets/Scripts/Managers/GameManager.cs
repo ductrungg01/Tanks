@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
         
         m_MessageText.text = string.Empty;
 
-        while (!NoTankLeft())
+        while (!IsPlayerDead())
         {
             await UniTask.Yield();
         }
@@ -109,18 +109,9 @@ public class GameManager : MonoBehaviour
         await UniTask.Delay(TimeSpan.FromSeconds(m_EndDelay));
     }
 
-    private bool NoTankLeft()
+    private bool IsPlayerDead()
     {
-        // int numTanksLeft = 0;
-        //
-        // for (int i = 0; i < m_Tanks.Length; i++)
-        // {
-        //     if (m_Tanks[i]._Instance.activeSelf)
-        //         numTanksLeft++;
-        // }
-
-        return false;
-        //return numTanksLeft <= 0;
+        return _Player.activeSelf;
     }
     
     private TankManager GetRoundWinner()
