@@ -15,7 +15,7 @@ public class PlayerStatsManager : MonoBehaviour
     [HideInInspector] public float PlayerSpeed;
     [HideInInspector] public float TankMass;
     [HideInInspector] public float TankOilRemain;
-    [HideInInspector] public float TankOilConsumption = 0.05f;
+    [HideInInspector] public float TankOilConsumption = 0.15f;
 
     private void Awake()
     {

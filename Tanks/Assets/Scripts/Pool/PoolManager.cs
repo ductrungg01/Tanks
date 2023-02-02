@@ -8,6 +8,7 @@ public class PoolManager : MonoBehaviour
     public static PoolManager Instance;
     
     public ObjectPooler shellPooler;
+    public ObjectPooler rocketPooler;
 
     private void Awake()
     {

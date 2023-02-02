@@ -13,14 +13,18 @@ public class TankShooting : MonoBehaviour
     public float _MaxLaunchForce = 30f; 
     public float _MaxChargeTime = 0.75f;
     
-    private string _FireButton;         
+    private string _FireButton = "FirePlayer";         
     private float _CurrentLaunchForce;  
     private float _ChargeSpeed;         
     private bool _Fired;
 
     private TankInformation _TankInformation;
 
+    public ShootingType typeInUse;
+    private ShootingCommander _ShootingCommander;
 
+    private Timer _TimerForMachineGun;
+    
     private void OnEnable()
     {
         _CurrentLaunchForce = _MinLaunchForce;
@@ -30,46 +34,70 @@ public class TankShooting : MonoBehaviour
 
     private void Start()
     {
-        _FireButton = "Fire" + "Player";
-
         _TankInformation = GetComponent<TankInformation>();
 
         _ChargeSpeed = (_MaxLaunchForce - _MinLaunchForce) / _MaxChargeTime;
+
+        _ShootingCommander = gameObject.AddComponent<ShootingCommander>();
+        _ShootingCommander.AddMethod(new RocketShooting());
+        _ShootingCommander.AddMethod(new MachineGunShooting());
+
+        _TimerForMachineGun = gameObject.AddComponent<Timer>();
+        _TimerForMachineGun.Duration = 0.03f;
+        _TimerForMachineGun.Run();
     }
 
     private void Update()
     {
         if (_TankInformation._IsPlayer)
         {
-            // Track the current state of the fire button and make decisions based on the current launch force.
-            _AimSlider.value = _MinLaunchForce;
-            
-            if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
+            switch (typeInUse)
             {
-                // at max charge and not yet fire
-                _CurrentLaunchForce = _MaxLaunchForce;
-                Fire();
-            }
-            else if (Input.GetButtonDown(_FireButton))
-            {
-                // have we pressed fire for the first time?
-                _Fired = false;
-                _CurrentLaunchForce = _MinLaunchForce;
+                case ShootingType.Rocket:
+                {
+                    _AimSlider.value = _MinLaunchForce;
 
-                _ShootingAudio.clip = _ChargingClip;
-                _ShootingAudio.Play();
-            }
-            else if (Input.GetButton(_FireButton) && !_Fired)
-            {
-                // holding the fire button and not yet fired
-                _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
+                    if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
+                    {
+                        _CurrentLaunchForce = _MaxLaunchForce;
+                        _Fired = true;
+                        Fire();
+                    }
+                    else if (Input.GetButtonDown(_FireButton))
+                    {
+                        _Fired = false;
+                        _CurrentLaunchForce = _MinLaunchForce;
 
-                _AimSlider.value = _CurrentLaunchForce;
-            }
-            else if (Input.GetButtonUp(_FireButton) && !_Fired)
-            {
-                // we released the button and having not fired yet
-                Fire();
+                        _ShootingAudio.clip = _ChargingClip;
+                        _ShootingAudio.Play();
+                    }
+                    else if (Input.GetButton(_FireButton) && !_Fired)
+                    {
+                        _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
+
+                        _AimSlider.value = _CurrentLaunchForce;
+                    }
+                    else if (Input.GetButtonUp(_FireButton) && !_Fired)
+                    {
+                        _Fired = true;
+                        Fire();
+                    }
+                    
+                    break;
+                }
+                case ShootingType.MachineGun:
+                {
+                    if (Input.GetButton(_FireButton))
+                    {
+                        if (_TimerForMachineGun.Finished)
+                        {
+                            _TimerForMachineGun.Stop();
+                            Fire();
+                            _TimerForMachineGun.Run();
+                        }
+                    }
+                    break;
+                }
             }
         }
     }
@@ -77,26 +105,7 @@ public class TankShooting : MonoBehaviour
 
     private void Fire()
     {
-        // Instantiate and launch the shell.
-        _Fired = true;
-        
-        GameObject shell = PoolManager.Instance.shellPooler.OnTakeFromPool(_FireTransform.position, _FireTransform.rotation);
-        
-        if (shell)
-        {
-            Rigidbody shellInstance = shell.GetComponent<Rigidbody>();
-        
-            shellInstance.velocity = _CurrentLaunchForce * _FireTransform.forward;
-
-            _ShootingAudio.clip = _FireClip;
-            _ShootingAudio.Play();
-
-            _CurrentLaunchForce = _MinLaunchForce;
-        }
-        else
-        {
-            Debug.Log("Cannot fire!");
-        }
+        _ShootingCommander.Fire(typeInUse,_FireTransform.position, _FireTransform.rotation, _CurrentLaunchForce * _FireTransform.forward);
         
     }
 }
