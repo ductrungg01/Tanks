@@ -41,6 +41,7 @@ public class TankShooting : MonoBehaviour
         _ShootingCommander = gameObject.AddComponent<ShootingCommander>();
         _ShootingCommander.AddMethod(new RocketShooting());
         _ShootingCommander.AddMethod(new MachineGunShooting());
+        _ShootingCommander.AddMethod(new SmokeGrenadeShooting());
 
         _TimerForMachineGun = gameObject.AddComponent<Timer>();
         _TimerForMachineGun.Duration = 0.03f;
@@ -87,15 +88,21 @@ public class TankShooting : MonoBehaviour
                 }
                 case ShootingType.MachineGun:
                 {
+                    if (Input.GetButton(_FireButton) && _TimerForMachineGun.Finished)
+                    {
+                        _TimerForMachineGun.Stop();
+                        Fire();
+                        _TimerForMachineGun.Run();
+                    }
+                    break;
+                }
+                case ShootingType.SmokeGrenade:
+                {
                     if (Input.GetButton(_FireButton))
                     {
-                        if (_TimerForMachineGun.Finished)
-                        {
-                            _TimerForMachineGun.Stop();
-                            Fire();
-                            _TimerForMachineGun.Run();
-                        }
+                        Fire();
                     }
+
                     break;
                 }
             }
@@ -106,6 +113,5 @@ public class TankShooting : MonoBehaviour
     private void Fire()
     {
         _ShootingCommander.Fire(typeInUse,_FireTransform.position, _FireTransform.rotation, _CurrentLaunchForce * _FireTransform.forward);
-        
     }
 }

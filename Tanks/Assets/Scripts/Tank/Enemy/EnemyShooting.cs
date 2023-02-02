@@ -19,6 +19,8 @@ public class EnemyShooting : MonoBehaviour
     private float _CooldownMax = 5f;
     private float _CooldownRemain;
 
+    public bool isStopShooting = false;
+    
     private void Start()
     {
         _CooldownRemain = Random.Range(_CooldownMin, _CooldownMax);
@@ -26,6 +28,8 @@ public class EnemyShooting : MonoBehaviour
 
     private void Update()
     {
+        if (isStopShooting == true) return;
+        
         if (_CooldownRemain > 0)
         {
             _CooldownRemain -= Time.deltaTime;

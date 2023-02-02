@@ -23,7 +23,7 @@ public static class ConfigurationUtil
     private static float _TankOil = 100f;
     
     // Defend
-    private static int _Defend = 132;
+    private static int _Defend = 254;
 
     // Starting num of bullet/shell every ShootingType
     private static int[] numsBulletInShootingTypes = new int[4]

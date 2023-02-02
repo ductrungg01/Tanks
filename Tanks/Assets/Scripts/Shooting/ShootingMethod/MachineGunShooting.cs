@@ -16,7 +16,7 @@ public class MachineGunShooting : IShootingMethod
     {
         //Debug.Log("MachineGun fire");
         
-        velocity = new Vector3(velocity.x, -0.1f, velocity.z);
+        velocity = new Vector3(velocity.x, -0.5f, velocity.z);
         //rotation = Quaternion.Euler(10, rotation.y, rotation.z);
         
         velocity *= _ForceBuffer;

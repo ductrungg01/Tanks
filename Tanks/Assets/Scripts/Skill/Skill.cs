@@ -54,15 +54,15 @@ public class Skill : MonoBehaviour
 
     void Skill1()
     {
-        _PlayerStats.Defend += 5;
+        _PlayerStats.Defend += 50;
     }
     void Skill2()
     {
-        _PlayerStats.HP += 20;
+        _PlayerStats.HP += 35;
     }
     void Skill3()
     {
-        
+        EnemyManager.Instance.StopEffectAllEnemy(10f);
     }
 
     #endregion
