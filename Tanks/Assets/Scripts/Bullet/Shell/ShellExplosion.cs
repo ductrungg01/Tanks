@@ -27,6 +27,8 @@ public class ShellExplosion : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, m_ExplosionRadius, m_TankMask);
         for (int i = 0; i < colliders.Length; i++)
         {
+            if (colliders[i].CompareTag("Bullet")) continue;
+
             Rigidbody targetRigidbody = colliders[i].GetComponent<Rigidbody>();
 
             if (!targetRigidbody)

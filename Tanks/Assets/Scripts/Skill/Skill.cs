@@ -62,7 +62,7 @@ public class Skill : MonoBehaviour
     }
     void Skill3()
     {
-        EnemyManager.Instance.StopEffectAllEnemy(10f);
+        EnemyManager.Instance.StopEffectAllEnemy(10f, true);
     }
 
     #endregion

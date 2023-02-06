@@ -42,6 +42,7 @@ public class TankShooting : MonoBehaviour
         _ShootingCommander.AddMethod(new RocketShooting());
         _ShootingCommander.AddMethod(new MachineGunShooting());
         _ShootingCommander.AddMethod(new SmokeGrenadeShooting());
+        _ShootingCommander.AddMethod(new SuperArroundShooting());
 
         _TimerForMachineGun = gameObject.AddComponent<Timer>();
         _TimerForMachineGun.Duration = 0.03f;
@@ -103,6 +104,14 @@ public class TankShooting : MonoBehaviour
                         Fire();
                     }
 
+                    break;
+                }
+                case ShootingType.SuperArround:
+                {
+                    if (Input.GetButton(_FireButton))
+                    {
+                        _ShootingCommander.Fire(typeInUse,this.transform.position, _FireTransform.rotation, _FireTransform.forward);
+                    }
                     break;
                 }
             }

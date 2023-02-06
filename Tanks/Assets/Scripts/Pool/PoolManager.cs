@@ -10,6 +10,7 @@ public class PoolManager : MonoBehaviour
     public ObjectPooler shellPooler;
     public ObjectPooler rocketPooler;
     public ObjectPooler smokeGrenadePooler;
+    public ObjectPooler icePooler;
 
     private void Awake()
     {

@@ -9,7 +9,7 @@ public static class ConfigurationUtil
     
     // Mana
     private static int _MaxMana = 10;
-    private static int _StartingMana = 3;
+    private static int _StartingMana = 5;
     private static float _ManaRecoverSpeed = 0.4f;
     
     // Speed 
