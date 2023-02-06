@@ -3,6 +3,7 @@ using UnityEngine.Serialization;
 
 public class TankMovement : MonoBehaviour
 {
+    #region Fields
     public float _TurnSpeed = 180f;       
     public AudioSource _MovementAudio;    
     public AudioClip _EngineIdling;       
@@ -17,28 +18,26 @@ public class TankMovement : MonoBehaviour
     private float _OriginalPitch;
 
     private TankInformation _TankInformation;
+    #endregion
 
     private void Awake()
     {
         _Rigidbody = GetComponent<Rigidbody>();
         _TankInformation = GetComponent<TankInformation>();
     }
-
-
+    
     private void OnEnable ()
     {
         _Rigidbody.isKinematic = false;
         _MovementInputValue = 0f;
         _TurnInputValue = 0f;
     }
-
-
+    
     private void OnDisable ()
     {
         _Rigidbody.isKinematic = true;
     }
-
-
+    
     private void Start()
     {
         _MovementAxisName = "Vertical" + "Player";
@@ -47,7 +46,6 @@ public class TankMovement : MonoBehaviour
         _OriginalPitch = _MovementAudio.pitch;
     }
     
-
     private void Update()
     {
         if (_TankInformation._IsPlayer)
@@ -59,8 +57,7 @@ public class TankMovement : MonoBehaviour
 
         EngineAudio();
     }
-
-
+    
     private void EngineAudio()
     {
         // We need detect the input for player but don't need for enemy
@@ -105,8 +102,7 @@ public class TankMovement : MonoBehaviour
         _MovementAudio.pitch = Random.Range (_OriginalPitch - _PitchRange, _OriginalPitch + _PitchRange);
         _MovementAudio.Play();
     }
-
-
+    
     private void FixedUpdate()
     {
         if (_TankInformation._IsPlayer)
@@ -116,8 +112,7 @@ public class TankMovement : MonoBehaviour
             Turn();
         }
     }
-
-
+    
     private void Move()
     {
         // Adjust the position of the tank based on the player's input.
@@ -127,7 +122,6 @@ public class TankMovement : MonoBehaviour
         // Apply this movement to the rigidbody's position.
         _Rigidbody.MovePosition(_Rigidbody.position + movement);
     }
-
 
     private void Turn()
     {

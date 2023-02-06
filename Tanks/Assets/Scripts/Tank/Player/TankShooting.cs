@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class TankShooting : MonoBehaviour
 {
+    #region Fields
     public Transform _FireTransform;    
     public Slider _AimSlider;           
     public AudioSource _ShootingAudio;  
@@ -24,14 +25,14 @@ public class TankShooting : MonoBehaviour
     private ShootingCommander _ShootingCommander;
 
     private Timer _TimerForMachineGun;
+    #endregion
     
     private void OnEnable()
     {
         _CurrentLaunchForce = _MinLaunchForce;
         _AimSlider.value = _MinLaunchForce;
     }
-
-
+    
     private void Start()
     {
         _TankInformation = GetComponent<TankInformation>();
@@ -117,8 +118,7 @@ public class TankShooting : MonoBehaviour
             }
         }
     }
-
-
+    
     private void Fire()
     {
         _ShootingCommander.Fire(typeInUse,_FireTransform.position, _FireTransform.rotation, _CurrentLaunchForce * _FireTransform.forward);

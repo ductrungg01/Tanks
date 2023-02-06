@@ -1,28 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Skill : MonoBehaviour
 {
-    [SerializeField] private int _manaCost;
+    [SerializeField] private int _ManaCost;
     [SerializeField] private int _SkillID;
-    private Cooldown _coolDownEffect;
+    private Cooldown _CoolDownEffect;
     private PlayerStats _PlayerStats;
     
-    // Start is called before the first frame update
     void Start()
     {
-        _coolDownEffect = GetComponent<Cooldown>();
+        _CoolDownEffect = GetComponent<Cooldown>();
         _PlayerStats = FindObjectOfType<PlayerStats>();
     }
 
     public void OnClick()
     {
-        if (ManaManager.Instance.IsEnoughMana(_manaCost))
+        if (ManaManager.Instance.IsEnoughMana(_ManaCost) && _CoolDownEffect._CanBeUse)
         {
-            ManaManager.Instance.OnTakeMana(_manaCost);
-            _coolDownEffect.StartCooldown();
+            ManaManager.Instance.OnTakeMana(_ManaCost);
+            _CoolDownEffect.StartCooldown();
             
             DoSkill();
         }

@@ -5,15 +5,12 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     #region Fields
-    // Stats
     private int _HP;
     private int _Defend;
     private float _PlayerSpeed;
     private float _TankMass;
     private float _TankOilRemain;
     private float _TankOilConsumption = 0.15f;
-
-    private TankInformation _TankInformation;
     #endregion
 
     private void Start()
@@ -23,9 +20,7 @@ public class PlayerStats : MonoBehaviour
         _TankOilRemain = ConfigurationUtil.TankOil;
         _Defend = ConfigurationUtil.Defend;
         _HP = (int)ConfigurationUtil.StartingHealth;
-        
-        _TankInformation = GetComponent<TankInformation>();
-        
+
         SaveStatsForManager();
     }
 

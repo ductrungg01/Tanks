@@ -6,12 +6,6 @@ using UnityEngine;
 
 public class StopEffectForEnemy : MonoBehaviour
 {
-
-    private void Start()
-    {
-        
-    }
-
     public async UniTask TurnOn(float time)
     {
         gameObject.GetComponent<EnemyMoving>()._NavMeshAgent.speed = 0;

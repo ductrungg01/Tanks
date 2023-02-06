@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class ExplosionInfor
 {
+    #region Fields
     public Vector3 _Position = new Vector3();
     public float _ExplosionRadius = 5f;   
     public float _ExplosionForce = 1000f;
+    #endregion
 
+    #region Constructors
     public ExplosionInfor(Vector3 position)
     {
         this._Position = position;
@@ -19,12 +22,5 @@ public class ExplosionInfor
         this._ExplosionRadius = radius;
         this._ExplosionForce = explosionForce;
     }
-
-    public ExplosionInfor GetExplosionInforOfShell(ExplosionInfor e)
-    {
-        e._ExplosionRadius = 5f;
-        e._ExplosionForce = 1000f;
-
-        return e;
-    }
+    #endregion
 }

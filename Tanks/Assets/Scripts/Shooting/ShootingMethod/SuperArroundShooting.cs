@@ -7,6 +7,7 @@ public class SuperArroundShooting : IShootingMethod
 {
     public ShootingType _Type = ShootingType.SuperArround;
 
+    // TODO: This is the stupid method, need to change
     private List<Vector3> pos = new List<Vector3>()
     {
         new Vector3(0, 1.7f, 1.35f),
@@ -14,7 +15,6 @@ public class SuperArroundShooting : IShootingMethod
         new Vector3(0f, 1.7f, -1.35f),
         new Vector3(-1.35f, 1.7f, 0)
     };
-
     private List<Quaternion> rot = new List<Quaternion>()
     {
         Quaternion.Euler(350, 0, 0),
@@ -22,7 +22,6 @@ public class SuperArroundShooting : IShootingMethod
         Quaternion.Euler(350, 180, 0),
         Quaternion.Euler(350, 270, 0),
     };
-
     private List<Vector3> velo = new List<Vector3>()
     {
         new Vector3(0, 2.0f, 15),
@@ -38,6 +37,7 @@ public class SuperArroundShooting : IShootingMethod
 
     public void Fire(Vector3 position, Quaternion rotation, Vector3 velocity)
     {
+        // TODO: This is the MATAFAKA stupid method, need to change
         for (int i = 0; i < 4; i++)
         {
             GameObject bullet = PoolManager.Instance.shellPooler.OnTakeFromPool(position + pos[i] + new Vector3(0, 0.5f, 0), rot[i]);

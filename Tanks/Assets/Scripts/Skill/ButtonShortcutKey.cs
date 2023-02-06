@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ButtonShortcutKey : MonoBehaviour
 {
-    [SerializeField] private KeyCode shortcutKey;
+    [SerializeField] private KeyCode _ShortcutKey;
 
     private Button btn;
 
@@ -14,11 +15,10 @@ public class ButtonShortcutKey : MonoBehaviour
     {
         btn = GetComponent<Button>();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        if (Input.GetKey(shortcutKey))
+        if (Input.GetKey(_ShortcutKey))
         {
             btn.onClick.Invoke();
         }

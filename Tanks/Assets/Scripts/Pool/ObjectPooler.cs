@@ -4,41 +4,44 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ObjectPooler : MonoBehaviour
 {
-    private GameObject CollapsePollerGO;
-    private List<GameObject> pooledObject = new List<GameObject>();
-    [SerializeField] private GameObject objectToPool;
-    [SerializeField] private int amountToPool;
+    #region Fields
+    private GameObject _CollapsePollerGO;
+    private List<GameObject> _PooledObject = new List<GameObject>();
+    [SerializeField] private GameObject _ObjectToPool;
+    [SerializeField] private int _AmountToPool;
+    #endregion
     
     void Start()
     {
-        CollapsePollerGO = this.gameObject;
+        _CollapsePollerGO = this.gameObject;
         Save();
     }
 
     public void Save()
     {
-        if (objectToPool == null) return;
+        if (_ObjectToPool == null) return;
 
         GameObject go;
-        for (int i = 0; i < amountToPool; i++)
+        for (int i = 0; i < _AmountToPool; i++)
         {
-            go = Instantiate(objectToPool);
-            go.transform.parent = CollapsePollerGO.transform; 
+            go = Instantiate(_ObjectToPool);
+            go.transform.parent = _CollapsePollerGO.transform; 
             go.SetActive(false);
-            pooledObject.Add(go);
+            _PooledObject.Add(go);
         }
     }
 
     public GameObject OnTakeFromPool()
     {
-        for (int i = 0; i < pooledObject.Count; i++)
+        for (int i = 0; i < _PooledObject.Count; i++)
         {
-            if (!pooledObject[i].activeInHierarchy)
+            if (!_PooledObject[i].activeInHierarchy)
             {
-                GameObject go = pooledObject[i];
+                GameObject go = _PooledObject[i];
                 go.SetActive(true);
                 return go;
             }
@@ -65,7 +68,7 @@ public class ObjectPooler : MonoBehaviour
     {
         await UniTask.Delay(TimeSpan.FromSeconds(delayTimeInSecond));
 
-        go.transform.parent = CollapsePollerGO.transform;
+        go.transform.parent = _CollapsePollerGO.transform;
         go.SetActive(false);
     }
 }

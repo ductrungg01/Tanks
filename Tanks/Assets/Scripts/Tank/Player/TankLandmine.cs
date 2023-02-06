@@ -27,7 +27,6 @@ public class TankLandmine : MonoBehaviour
 
     public void PutLandmine()
     {
-        // TODO: ObjPool the landmine
         GameObject landmine = Instantiate(_LandminePrefab);
         landmine.transform.position = _LandmineTransform.position;
     }

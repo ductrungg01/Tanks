@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerStatsShower : MonoBehaviour
 {
+    #region Fields
     // PlayerInfo
     private String _Name = "Angry ductrungg";
     [SerializeField] private Text _NameText;
@@ -19,6 +20,7 @@ public class PlayerStatsShower : MonoBehaviour
     [SerializeField] private Text _OilConsumptionText;
     [SerializeField] private Text _Mass;
     [SerializeField] private Text _SpeedText;
+    #endregion
     
     private void Update()
     {

@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class EnemyShooting : MonoBehaviour
 {
+    #region Fields
     public float _MinLaunchForce = 15f; 
     public float _MaxLaunchForce = 30f; 
     
@@ -20,6 +21,7 @@ public class EnemyShooting : MonoBehaviour
     private float _CooldownRemain;
 
     public bool isStopShooting = false;
+    #endregion
     
     private void Start()
     {
@@ -43,7 +45,6 @@ public class EnemyShooting : MonoBehaviour
     private void Fire()
     {
         // Instantiate and launch the shell.
-
         GameObject shell = PoolManager.Instance.shellPooler.OnTakeFromPool(_FireTransform.position, _FireTransform.rotation);
         
         if (shell)

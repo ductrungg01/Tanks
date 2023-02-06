@@ -14,7 +14,6 @@ public static class CalculateDamage
         float relativeDistance = (explosionInfor._ExplosionRadius - explosionDistance) / explosionInfor._ExplosionRadius;
         
         float damage = relativeDistance * maxDamage * 1/(defendStat/100f);
-        //float damage = relativeDistance * maxDamage;
 
         damage = Mathf.Max(0f, damage);
 

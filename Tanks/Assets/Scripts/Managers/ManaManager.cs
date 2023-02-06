@@ -2,36 +2,37 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class ManaManager : MonoBehaviour
 {
+    #region Fields
     public static ManaManager Instance;
     
-    [SerializeField] private Slider _slider;
-    [SerializeField] private Text _valueText;
+    [SerializeField] private Slider _Slider;
+    [SerializeField] private Text _ValueText;
+    #endregion
 
     private void Awake()
     {
         Instance = this;
     }
-
-    // Start is called before the first frame update
+    
     void Start()
     {
-        _slider.maxValue = ConfigurationUtil.MaxMana;
+        _Slider.maxValue = ConfigurationUtil.MaxMana;
         DataHolderUtil.ManaRightnow = ConfigurationUtil.StartingMana;
-        _slider.value = DataHolderUtil.ManaRightnow;
+        _Slider.value = DataHolderUtil.ManaRightnow;
 
-        _valueText.text = ((int)_slider.value).ToString();
+        _ValueText.text = ((int)_Slider.value).ToString();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         DataHolderUtil.ManaRightnow += ConfigurationUtil.ManaRecoverSpeed * Time.deltaTime;
-        _slider.value = DataHolderUtil.ManaRightnow;
-        _valueText.text = ((int)_slider.value).ToString();
+        _Slider.value = DataHolderUtil.ManaRightnow;
+        _ValueText.text = ((int)_Slider.value).ToString();
     }
 
     public bool IsEnoughMana(int value)

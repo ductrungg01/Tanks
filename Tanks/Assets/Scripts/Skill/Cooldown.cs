@@ -6,33 +6,34 @@ using UnityEngine.UI;
 
 public class Cooldown : MonoBehaviour
 {
-    [SerializeField] private int _cooldownTime;
-    [SerializeField] private Image _cooldownEffect;
-    private float _cooldownRemain = 0;
-
+    [SerializeField] private int _CooldownTime;
+    [SerializeField] private Image _CooldownEffect;
+    private float _CooldownRemain = 0;
+    [HideInInspector] public bool _CanBeUse;
     
-    // Start is called before the first frame update
     void Start()
     {
-        _cooldownEffect.fillAmount = 0;
+        _CooldownEffect.fillAmount = 0;
+        _CanBeUse = true;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        _cooldownEffect.fillAmount = _cooldownRemain / _cooldownTime;
+        _CooldownEffect.fillAmount = _CooldownRemain / _CooldownTime;
 
-        if (_cooldownRemain <= 0)
+        if (_CooldownRemain <= 0)
         {
-            _cooldownRemain = 0;
+            _CooldownRemain = 0;
+            _CanBeUse = true;
             return;
         }
 
-        _cooldownRemain -= Time.deltaTime;
+        _CooldownRemain -= Time.deltaTime;
     }
 
     public void StartCooldown()
     {
-        _cooldownRemain = _cooldownTime;
+        _CooldownRemain = _CooldownTime;
+        _CanBeUse = false;
     }
 }

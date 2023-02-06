@@ -3,34 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Landmine : MonoBehaviour
 {
-    [SerializeField] private GameObject _explosionPrefab;
+    #region Fields
+    [SerializeField] private GameObject _ExplosionPrefab;
 
-    private ParticleSystem _explosionParticles;
-    private AudioSource _explosionAudio;
+    private ParticleSystem _ExplosionParticles;
+    private AudioSource _ExplosionAudio;
+    #endregion
     
-    
-    // Start is called before the first frame update
     void Start()
     {
-        _explosionParticles = Instantiate(_explosionPrefab).GetComponent<ParticleSystem>();
-        _explosionAudio = _explosionParticles.GetComponent<AudioSource>();
+        _ExplosionParticles = Instantiate(_ExplosionPrefab).GetComponent<ParticleSystem>();
+        _ExplosionAudio = _ExplosionParticles.GetComponent<AudioSource>();
         
-        _explosionParticles.gameObject.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _ExplosionParticles.gameObject.SetActive(false);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        _explosionParticles.gameObject.SetActive(true);
-        _explosionParticles.gameObject.transform.position = this.transform.position;
+        _ExplosionParticles.gameObject.SetActive(true);
+        _ExplosionParticles.gameObject.transform.position = this.transform.position;
         
         TankHealth targetHealth = collision.gameObject.GetComponent<TankHealth>();
 
@@ -42,13 +37,12 @@ public class Landmine : MonoBehaviour
             Rigidbody targetRigidbody = collision.gameObject.GetComponent<Rigidbody>();
             targetRigidbody.AddExplosionForce(500f, transform.position, 1f);
             
-            _explosionParticles.transform.parent = null;
+            _ExplosionParticles.transform.parent = null;
         
-            _explosionParticles.Play();
+            _ExplosionParticles.Play();
         
-            _explosionAudio.Play();
+            _ExplosionAudio.Play();
             
-            // TODO: Obj pool pls
             Destroy(gameObject);
         }
     }

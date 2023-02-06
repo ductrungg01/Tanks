@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class TankHealth : MonoBehaviour
 {
+    #region Fields
     public float _StartingHealth;          
     public Slider _Slider;                        
     public Image _FillImage;                      
@@ -20,6 +21,7 @@ public class TankHealth : MonoBehaviour
     private bool _IsDead;
 
     private TankInformation _TankInformation;
+    #endregion
 
     private void Awake()
     {
@@ -58,7 +60,6 @@ public class TankHealth : MonoBehaviour
         {
             _CurrentHealth = PlayerStatsManager.Instance.HP;
             SetHealthUI ();
-            //Debug.Log("Player Health: " + _CurrentHealth);
         }
     }
 

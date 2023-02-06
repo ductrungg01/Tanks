@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    #region Fields
     public static EnemyManager Instance;
     
     public List<Transform> SpawnPointPositions = new List<Transform>();
 
-    public List<GameObject> EnemyInstance = new List<GameObject>();
+    [HideInInspector] public List<GameObject> EnemyInstance = new List<GameObject>();
+    #endregion
 
     private void Awake()
     {
