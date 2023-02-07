@@ -4,23 +4,38 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class StopEffectForEnemy : MonoBehaviour
+public class StopEffectBaseForEnemy : EffectBase
 {
-    public async UniTask TurnOn(float time)
-    {
-        gameObject.GetComponent<EnemyMoving>()._NavMeshAgent.speed = 0;
-        gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        gameObject.GetComponent<EnemyShooting>().isStopShooting = true;
-        
-        await UniTask.Delay(TimeSpan.FromSeconds(time));
-        
-        TurnOff();
-    }
+    private bool iceSpawn = false;
     
-    public void TurnOff()
+    
+    public override void TurnOnHandler(GameObject go)
     {
-        gameObject.GetComponent<EnemyMoving>()._NavMeshAgent.speed = ConfigurationUtil.EnemyTankSpeed;
-        gameObject.GetComponent<EnemyShooting>().isStopShooting = false;
+        go.GetComponent<EnemyMoving>().IsStop = true;
+        go.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        go.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+        if (iceSpawn)
+        {
+            GameObject ice =
+                PoolManager.Instance.icePooler.OnTakeFromPool(go.transform.position, go.transform.rotation);
+
+            PoolManager.Instance.icePooler.OnReturnToPool(ice, timeToTurnOff);
+        }
+    }
+
+    public override void TurnOffHandler(GameObject go)
+    {
+        go.GetComponent<EnemyMoving>().IsStop = false;
+    }
+
+    public StopEffectBaseForEnemy(bool iceSpawn,float timeToTurnOff) : base(timeToTurnOff)
+    {
+        this.iceSpawn = iceSpawn;
+    }
+
+    public StopEffectBaseForEnemy(bool iceSpawn, List<GameObject> targets, float timeToTurnOff) : base(targets, timeToTurnOff)
+    {
+        this.iceSpawn = iceSpawn;
     }
 }

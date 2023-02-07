@@ -7,5 +7,11 @@ public enum ShootingType
     Rocket,
     MachineGun,
     SmokeGrenade,
-    SuperArround
+    SuperArround,
+    
+    Silent,
+    Stunned,
+    Slowdown,
+    Stop,
+    Poisoned
 }

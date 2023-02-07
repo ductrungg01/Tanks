@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
                 Instantiate(_TankPrefab, _Tanks[i]._SpawnPoint.position, _Tanks[i]._SpawnPoint.rotation);
             _Tanks[i].Setup();
             
-            EnemyManager.Instance.EnemyInstance.Add(_Tanks[i]._Instance);
+            EnemyManager.Instance.EnemyInstanceList.Add(_Tanks[i]._Instance);
         }
     }
 

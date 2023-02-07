@@ -38,7 +38,34 @@ public class ShootingTypeHolder : MonoBehaviour
                 type = ShootingType.SuperArround;
                 break;
             }
+            case 5:
+            {
+                type = ShootingType.Silent;
+                break;
+            }
+            case 6:
+            {
+                type = ShootingType.Stunned;
+                break;
+            }
+            case 7:
+            {
+                type = ShootingType.Slowdown;
+                break;
+            }
+            case 8:
+            {
+                type = ShootingType.Stop;
+                break;
+            }
+            case 9:
+            {
+                type = ShootingType.Poisoned;
+                break;
+            }
         }
+        
+        
         
         GameManager.Instance._Player.GetComponent<TankShooting>().typeInUse = type;
     }

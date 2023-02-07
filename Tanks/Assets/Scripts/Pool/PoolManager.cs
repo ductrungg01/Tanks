@@ -11,6 +11,11 @@ public class PoolManager : MonoBehaviour
     public ObjectPooler rocketPooler;
     public ObjectPooler smokeGrenadePooler;
     public ObjectPooler icePooler;
+    public ObjectPooler silentBulletPooler;
+    public ObjectPooler stunnedBulletPooler;
+    public ObjectPooler slowdownBulletPooler;
+    public ObjectPooler stopBulletPooler;
+    public ObjectPooler poisonedBulletPooler;
 
     private void Awake()
     {

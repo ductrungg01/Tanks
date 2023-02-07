@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class SmokeGrenadeShooting : IShootingMethod
 {
@@ -19,7 +20,8 @@ public class SmokeGrenadeShooting : IShootingMethod
         {
             SmokeGrenadeExplosion bulletExp = bullet.GetComponent<SmokeGrenadeExplosion>();
             bulletExp.TurnOn();
-            EnemyManager.Instance.StopEffectAllEnemy(10f);
+            StopEffectBaseForEnemy stopEffectBaseForEnemy = new StopEffectBaseForEnemy(false, EnemyManager.Instance.EnemyInstanceList, 10);
+            stopEffectBaseForEnemy.TurnOn();
         }
         else
         {

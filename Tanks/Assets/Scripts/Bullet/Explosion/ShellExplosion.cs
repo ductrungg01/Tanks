@@ -4,11 +4,16 @@ using UnityEngine.Serialization;
 
 public class ShellExplosion : Explosion 
 {
-    public float _MaxLifeTime = 2f;
-
     protected override void Start()
     {
+        this.maxDamage = 100f;
+        this._ExplosionForce = 1000f;
+        this._MaxLifeTime = 3f;
+        this._ExplosionRadius = 5f;
+        
         PoolManager.Instance.shellPooler.OnReturnToPool(gameObject, _MaxLifeTime);
+        
+        
     }
 
    

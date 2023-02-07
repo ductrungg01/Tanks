@@ -1,5 +1,7 @@
 ﻿using System;
+using Unity.Jobs.LowLevel.Unsafe;
 using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Serialization;
@@ -19,6 +21,16 @@ public class TankHealth : MonoBehaviour
     private ParticleSystem _ExplosionParticles;   
     private float _CurrentHealth;  
     private bool _IsDead;
+
+    public struct PoisonedInfor
+    {
+        public float _TimesOfPoisoned;
+        public float _PoisonedDamage;
+    }
+
+    public PoisonedInfor _PoisonedInfor;
+    private bool _IsPoisoned = false;
+    private Timer poisonedTimer;
 
     private TankInformation _TankInformation;
     #endregion
@@ -45,6 +57,7 @@ public class TankHealth : MonoBehaviour
         }
     }
     
+
     private void OnEnable()
     {
         _CurrentHealth = _StartingHealth;
@@ -56,6 +69,27 @@ public class TankHealth : MonoBehaviour
 
     private void Update()
     {
+        if (_IsPoisoned)
+        {
+            if (poisonedTimer.Finished)
+            {
+                TakeDamage(_PoisonedInfor._PoisonedDamage);
+                _PoisonedInfor._TimesOfPoisoned--;
+                poisonedTimer.Stop();
+
+                if (_PoisonedInfor._TimesOfPoisoned == 0)
+                {
+                    _IsPoisoned = false;
+                    Destroy(gameObject.GetComponent<Timer>());
+                    poisonedTimer = null;
+                }
+                
+                poisonedTimer.Stop();
+                poisonedTimer.Duration = 1;
+                poisonedTimer.Run();
+            }
+        }
+        
         if (_TankInformation._IsPlayer)
         {
             _CurrentHealth = PlayerStatsManager.Instance.HP;
@@ -116,5 +150,17 @@ public class TankHealth : MonoBehaviour
 
         // Play the tank explosion sound effect.
         _ExplosionAudio.Play();
+    }
+
+    public void SetIsPoisoned(bool isPoisoned = true)
+    {
+        this._IsPoisoned = isPoisoned;
+
+        if (isPoisoned == true)
+        {
+            poisonedTimer = this.gameObject.AddComponent<Timer>();
+            poisonedTimer.Duration = 1;
+            poisonedTimer.Run();
+        }
     }
 }
