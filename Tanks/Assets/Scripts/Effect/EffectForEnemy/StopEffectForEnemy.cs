@@ -17,8 +17,10 @@ public class StopEffectForEnemy : EffectBase
 
         if (iceSpawn)
         {
+            Vector3 iceOffsetPos = new Vector3(-1f, 2f, -1f);
+            
             GameObject ice =
-                PoolManager.Instance.icePooler.OnTakeFromPool(go.transform.position, go.transform.rotation);
+                PoolManager.Instance.icePooler.OnTakeFromPool(go.transform.position + iceOffsetPos, Quaternion.Euler(0, 250, 0));
 
             PoolManager.Instance.icePooler.OnReturnToPool(ice, timeToTurnOff);
         }

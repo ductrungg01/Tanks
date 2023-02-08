@@ -20,20 +20,30 @@ public class PlayerStatsShower : MonoBehaviour
     [SerializeField] private Text _OilConsumptionText;
     [SerializeField] private Text _Mass;
     [SerializeField] private Text _SpeedText;
-    #endregion
     
+    // PlayerStats
+    private PlayerStats _PlayerStats;
+    #endregion
+
+    private void Start()
+    {
+        
+    }
+
     private void Update()
     {
+        _PlayerStats = GameManager.Instance._Player.GetComponent<PlayerStats>();
+        
         // Get stats from PlayerStatsManager
-        float hpRemain = PlayerStatsManager.Instance.HP;
+        float hpRemain = _PlayerStats.HP;
         float maxHp = ConfigurationUtil.StartingHealth;
-        float oilRemain = PlayerStatsManager.Instance.TankOilRemain;
+        float oilRemain = _PlayerStats.TankOilRemain;
         float maxOil = ConfigurationUtil.TankOil;
         
-        float defend = PlayerStatsManager.Instance.Defend;
-        float oilConsumption = PlayerStatsManager.Instance.TankOilConsumption;
-        float mass = PlayerStatsManager.Instance.TankMass;
-        float speed = PlayerStatsManager.Instance.PlayerSpeed;
+        float defend = _PlayerStats.Defend;
+        float oilConsumption = 0.25f;
+        float mass = _PlayerStats.TankMass;
+        float speed = _PlayerStats.PlayerSpeed;
 
 
         // Show

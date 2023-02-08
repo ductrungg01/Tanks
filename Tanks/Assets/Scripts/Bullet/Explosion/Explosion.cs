@@ -79,7 +79,8 @@ public abstract class Explosion : MonoBehaviour
 
         if (infor._IsPlayer)
         {
-            return PlayerStatsManager.Instance.Defend;
+            PlayerStats playerStats = GameManager.Instance._Player.GetComponent<PlayerStats>();
+            return playerStats.Defend;
         }
         else return 100;
     }

@@ -10,20 +10,26 @@ public class TankMovement : MonoBehaviour
     public AudioClip _EngineDriving;      
     public float _PitchRange = 0.2f;
     
-    private string _MovementAxisName;     
-    private string _TurnAxisName;         
+    private string _MovementAxisName = "VerticalPlayer";     
+    private string _TurnAxisName = "HorizontalPlayer";         
     private Rigidbody _Rigidbody;         
     private float _MovementInputValue;    
     private float _TurnInputValue;        
     private float _OriginalPitch;
 
     private TankInformation _TankInformation;
+    private PlayerStats _PlayerStats;
     #endregion
 
     private void Awake()
     {
         _Rigidbody = GetComponent<Rigidbody>();
         _TankInformation = GetComponent<TankInformation>();
+
+        if (_TankInformation._IsPlayer)
+        {
+            _PlayerStats = this.gameObject.GetComponent<PlayerStats>();
+        }
     }
     
     private void OnEnable ()
@@ -40,9 +46,6 @@ public class TankMovement : MonoBehaviour
     
     private void Start()
     {
-        _MovementAxisName = "Vertical" + "Player";
-        _TurnAxisName = "Horizontal" + "Player";
-
         _OriginalPitch = _MovementAudio.pitch;
     }
     
@@ -117,7 +120,7 @@ public class TankMovement : MonoBehaviour
     {
         // Adjust the position of the tank based on the player's input.
         // Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
-        Vector3 movement = transform.forward * _MovementInputValue * PlayerStatsManager.Instance.PlayerSpeed * Time.deltaTime;
+        Vector3 movement = transform.forward * _MovementInputValue * _PlayerStats.PlayerSpeed * Time.deltaTime;
 
         // Apply this movement to the rigidbody's position.
         _Rigidbody.MovePosition(_Rigidbody.position + movement);

@@ -8,8 +8,8 @@ public class RocketExplosion : Explosion
 {
     protected override void Start()
     {
-        this.maxDamage = 10f;
-        this._ExplosionForce = 20f;
+        this.maxDamage = 5f;
+        this._ExplosionForce = 5f;
         this._MaxLifeTime = 3f;
         this._ExplosionRadius = 5f;
         

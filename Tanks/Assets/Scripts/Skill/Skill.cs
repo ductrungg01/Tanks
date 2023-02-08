@@ -14,7 +14,6 @@ public class Skill : MonoBehaviour
     void Start()
     {
         _CoolDownEffect = GetComponent<Cooldown>();
-        _PlayerStats = FindObjectOfType<PlayerStats>();
     }
 
     public void OnClick()
@@ -54,10 +53,12 @@ public class Skill : MonoBehaviour
 
     void Skill1()
     {
+        _PlayerStats = GameManager.Instance._Player.GetComponent<PlayerStats>();
         _PlayerStats.Defend += 50;
     }
     void Skill2()
     {
+        _PlayerStats = GameManager.Instance._Player.GetComponent<PlayerStats>();
         _PlayerStats.HP += 35;
     }
     void Skill3()

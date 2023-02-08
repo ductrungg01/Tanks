@@ -33,6 +33,7 @@ public class TankHealth : MonoBehaviour
     private Timer poisonedTimer;
 
     private TankInformation _TankInformation;
+    private PlayerStats _PlayerStats;
     #endregion
 
     private void Awake()
@@ -40,6 +41,7 @@ public class TankHealth : MonoBehaviour
         _ExplosionParticles = Instantiate(_ExplosionPrefab).GetComponent<ParticleSystem>();
         _ExplosionAudio = _ExplosionParticles.GetComponent<AudioSource>();
         _TankInformation = GetComponent<TankInformation>();
+        _PlayerStats = GetComponent<PlayerStats>();
         
         _ExplosionParticles.gameObject.SetActive(false);
         
@@ -92,7 +94,7 @@ public class TankHealth : MonoBehaviour
         
         if (_TankInformation._IsPlayer)
         {
-            _CurrentHealth = PlayerStatsManager.Instance.HP;
+            _CurrentHealth = _PlayerStats.HP;
             SetHealthUI ();
         }
     }

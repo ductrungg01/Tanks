@@ -20,8 +20,6 @@ public class PlayerStats : MonoBehaviour
         _TankOilRemain = ConfigurationUtil.TankOil;
         _Defend = ConfigurationUtil.Defend;
         _HP = (int)ConfigurationUtil.StartingHealth;
-
-        SaveStatsForManager();
     }
 
     private void FixedUpdate()
@@ -29,18 +27,6 @@ public class PlayerStats : MonoBehaviour
         TankOilRemain -= _TankOilConsumption / 50;
 
         PlayerSpeed = ((TankMass - TankOilRemain * 10) / TankMass) * ConfigurationUtil.PlayerTankSpeed;
-
-        SaveStatsForManager();
-    }
-
-    void SaveStatsForManager()
-    {
-        PlayerStatsManager.Instance.HP = _HP;
-        PlayerStatsManager.Instance.Defend = _Defend;
-        PlayerStatsManager.Instance.PlayerSpeed = _PlayerSpeed;
-        PlayerStatsManager.Instance.TankMass = _TankMass;
-        PlayerStatsManager.Instance.TankOilRemain = _TankOilRemain;
-        PlayerStatsManager.Instance.TankOilConsumption = _TankOilConsumption;
     }
 
     #region Propertises
