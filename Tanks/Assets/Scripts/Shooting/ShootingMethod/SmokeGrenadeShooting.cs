@@ -20,8 +20,8 @@ public class SmokeGrenadeShooting : IShootingMethod
         {
             SmokeGrenadeExplosion bulletExp = bullet.GetComponent<SmokeGrenadeExplosion>();
             bulletExp.TurnOn();
-            StopEffectBaseForEnemy stopEffectBaseForEnemy = new StopEffectBaseForEnemy(false, EnemyManager.Instance.EnemyInstanceList, 10);
-            stopEffectBaseForEnemy.TurnOn();
+            StopEffectForEnemy stopEffectForEnemy = new StopEffectForEnemy(false, EnemyManager.Instance.EnemyInstanceList, 10);
+            stopEffectForEnemy.TurnOn();
         }
         else
         {

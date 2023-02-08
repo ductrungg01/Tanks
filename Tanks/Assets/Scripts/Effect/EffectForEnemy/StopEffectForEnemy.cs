@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class StopEffectBaseForEnemy : EffectBase
+public class StopEffectForEnemy : EffectBase
 {
     private bool iceSpawn = false;
     
@@ -29,12 +29,12 @@ public class StopEffectBaseForEnemy : EffectBase
         go.GetComponent<EnemyMoving>().IsStop = false;
     }
 
-    public StopEffectBaseForEnemy(bool iceSpawn,float timeToTurnOff) : base(timeToTurnOff)
+    public StopEffectForEnemy(bool iceSpawn,float timeToTurnOff) : base(timeToTurnOff)
     {
         this.iceSpawn = iceSpawn;
     }
 
-    public StopEffectBaseForEnemy(bool iceSpawn, List<GameObject> targets, float timeToTurnOff) : base(targets, timeToTurnOff)
+    public StopEffectForEnemy(bool iceSpawn, List<GameObject> targets, float timeToTurnOff) : base(targets, timeToTurnOff)
     {
         this.iceSpawn = iceSpawn;
     }

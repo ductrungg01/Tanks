@@ -62,8 +62,8 @@ public class Skill : MonoBehaviour
     }
     void Skill3()
     {
-        StopEffectBaseForEnemy stopEffectBaseForEnemy = new StopEffectBaseForEnemy(true, EnemyManager.Instance.EnemyInstanceList, 10);
-        stopEffectBaseForEnemy.TurnOn();
+        StopEffectForEnemy stopEffectForEnemy = new StopEffectForEnemy(true, EnemyManager.Instance.EnemyInstanceList, 10);
+        stopEffectForEnemy.TurnOn();
     }
 
     #endregion

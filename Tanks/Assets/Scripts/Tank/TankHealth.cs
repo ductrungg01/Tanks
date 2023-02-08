@@ -135,6 +135,11 @@ public class TankHealth : MonoBehaviour
         // Play explosion and audio
         PlayExplosionEffect();
 
+        if (_TankInformation._IsPlayer)
+        {
+            this.GetComponent<PlayerStats>().HP = 0;
+        }
+        
         // Turn the tank off.
         gameObject.SetActive (false);
     }

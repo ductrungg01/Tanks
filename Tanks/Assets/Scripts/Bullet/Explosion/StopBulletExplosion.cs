@@ -8,7 +8,7 @@ public class StopBulletExplosion : Explosion
     {
         PoolManager.Instance.rocketPooler.OnReturnToPool(gameObject, _MaxLifeTime);
         
-        this._Effects.Add(new StopEffectBaseForEnemy(false, 10));
+        this._Effects.Add(new StopEffectForEnemy(false, 10));
     }
 
    
