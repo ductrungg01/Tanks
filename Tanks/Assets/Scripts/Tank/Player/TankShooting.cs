@@ -114,7 +114,7 @@ public class TankShooting : MonoBehaviour
                 }
                 case ShootingType.SuperArround:
                 {
-                    if (Input.GetButton(_FireButton))
+                    if (Input.GetButtonUp(_FireButton))
                     {
                         _ShootingCommander.Fire(typeInUse,this.transform.position, _FireTransform.rotation, _FireTransform.forward);
                     }
