@@ -7,7 +7,18 @@ using UnityEngine;
 public class StopEffectForEnemy : EffectBase
 {
     private bool iceSpawn = false;
-    
+
+    #region Constructors
+    public StopEffectForEnemy(bool iceSpawn,float timeToTurnOff) : base(timeToTurnOff)
+    {
+        this.iceSpawn = iceSpawn;
+    }
+
+    public StopEffectForEnemy(bool iceSpawn, List<GameObject> targets, float timeToTurnOff) : base(targets, timeToTurnOff)
+    {
+        this.iceSpawn = iceSpawn;
+    }
+    #endregion
     
     public override void TurnOnHandler(GameObject go)
     {
@@ -29,15 +40,5 @@ public class StopEffectForEnemy : EffectBase
     public override void TurnOffHandler(GameObject go)
     {
         go.GetComponent<EnemyMoving>().IsStop = false;
-    }
-
-    public StopEffectForEnemy(bool iceSpawn,float timeToTurnOff) : base(timeToTurnOff)
-    {
-        this.iceSpawn = iceSpawn;
-    }
-
-    public StopEffectForEnemy(bool iceSpawn, List<GameObject> targets, float timeToTurnOff) : base(targets, timeToTurnOff)
-    {
-        this.iceSpawn = iceSpawn;
     }
 }

@@ -6,6 +6,16 @@ using UnityEngine;
 
 public class PoisonedEffectBaseForEnemy : EffectBase
 {
+    #region Constructors
+    public PoisonedEffectBaseForEnemy(float timeToTurnOff) : base(timeToTurnOff)
+    {
+    }
+
+    public PoisonedEffectBaseForEnemy(List<GameObject> targets, float timeToTurnOff) : base(targets, timeToTurnOff)
+    {
+    }
+    #endregion
+    
     public override void TurnOnHandler(GameObject go)
     {
         TankHealth.PoisonedInfor poisonedInfor = new TankHealth.PoisonedInfor();
@@ -21,11 +31,5 @@ public class PoisonedEffectBaseForEnemy : EffectBase
         go.GetComponent<TankHealth>().SetIsPoisoned(false);
     }
 
-    public PoisonedEffectBaseForEnemy(float timeToTurnOff) : base(timeToTurnOff)
-    {
-    }
 
-    public PoisonedEffectBaseForEnemy(List<GameObject> targets, float timeToTurnOff) : base(targets, timeToTurnOff)
-    {
-    }
 }

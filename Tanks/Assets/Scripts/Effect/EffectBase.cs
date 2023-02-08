@@ -6,9 +6,12 @@ using UnityEngine;
 
 public abstract class EffectBase
 {
+    #region Fields
     public List<GameObject> targets = new List<GameObject>();
     public float timeToTurnOff = 100f;
+    #endregion
 
+    #region Constructors
     public EffectBase(float timeToTurnOff)
     {
         this.timeToTurnOff = timeToTurnOff;
@@ -19,6 +22,7 @@ public abstract class EffectBase
         this.targets = targets;
         this.timeToTurnOff = timeToTurnOff;
     }
+    #endregion
     
     public virtual async UniTask TurnOn() {
         foreach (GameObject target in targets)

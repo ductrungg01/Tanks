@@ -6,6 +6,16 @@ using UnityEngine;
 
 public class SilentEffectBaseForEnemy : EffectBase
 {
+    #region Constructors
+    public SilentEffectBaseForEnemy(float timeToTurnOff) : base(timeToTurnOff)
+    {
+    }
+
+    public SilentEffectBaseForEnemy(List<GameObject> targets, float timeToTurnOff) : base(targets, timeToTurnOff)
+    {
+    }
+    #endregion
+    
     public override void TurnOnHandler(GameObject go)
     {
         go.GetComponent<EnemyShooting>().isStopShooting = true;
@@ -14,13 +24,5 @@ public class SilentEffectBaseForEnemy : EffectBase
     public override void TurnOffHandler(GameObject go)
     {
         go.GetComponent<EnemyShooting>().isStopShooting = true;
-    }
-
-    public SilentEffectBaseForEnemy(float timeToTurnOff) : base(timeToTurnOff)
-    {
-    }
-
-    public SilentEffectBaseForEnemy(List<GameObject> targets, float timeToTurnOff) : base(targets, timeToTurnOff)
-    {
     }
 }
