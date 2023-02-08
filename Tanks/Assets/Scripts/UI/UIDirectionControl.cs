@@ -1,22 +1,22 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class UIDirectionControl : MonoBehaviour
 {
-    public bool m_UseRelativeRotation = true;  
+    public bool _UseRelativeRotation = true;
 
-
-    private Quaternion m_RelativeRotation;     
+    private Quaternion _RelativeRotation;     
 
 
     private void Start()
     {
-        m_RelativeRotation = transform.parent.localRotation;
+        _RelativeRotation = transform.parent.localRotation;
     }
 
 
     private void Update()
     {
-        if (m_UseRelativeRotation)
-            transform.rotation = m_RelativeRotation;
+        if (_UseRelativeRotation)
+            transform.rotation = _RelativeRotation;
     }
 }

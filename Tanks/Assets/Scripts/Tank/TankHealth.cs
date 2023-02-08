@@ -1,82 +1,173 @@
-﻿using UnityEngine;
+﻿using System;
+using Unity.Jobs.LowLevel.Unsafe;
+using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class TankHealth : MonoBehaviour
 {
-    public float m_StartingHealth = 100f;          
-    public Slider m_Slider;                        
-    public Image m_FillImage;                      
-    public Color m_FullHealthColor = Color.green;  
-    public Color m_ZeroHealthColor = Color.red;    
-    public GameObject m_ExplosionPrefab;
-    
-    
-    private AudioSource m_ExplosionAudio;          
-    private ParticleSystem m_ExplosionParticles;   
-    private float m_CurrentHealth;  
-    private bool m_Dead;            
+    #region Fields
+    public float _StartingHealth;          
+    public Slider _Slider;                        
+    public Image _FillImage;                      
+    public Color _FullHealthColor = Color.green;  
+    public Color _ZeroHealthColor = Color.red;    
+    public GameObject _ExplosionPrefab;
 
+    private AudioSource _ExplosionAudio;          
+    private ParticleSystem _ExplosionParticles;   
+    private float _CurrentHealth;  
+    private bool _IsDead;
+
+    public struct PoisonedInfor
+    {
+        public float _TimesOfPoisoned;
+        public float _PoisonedDamage;
+    }
+
+    public PoisonedInfor _PoisonedInfor;
+    private bool _IsPoisoned = false;
+    private Timer poisonedTimer;
+
+    private TankInformation _TankInformation;
+    private PlayerStats _PlayerStats;
+    #endregion
 
     private void Awake()
     {
-        m_ExplosionParticles = Instantiate(m_ExplosionPrefab).GetComponent<ParticleSystem>();
-        m_ExplosionAudio = m_ExplosionParticles.GetComponent<AudioSource>();
+        _ExplosionParticles = Instantiate(_ExplosionPrefab).GetComponent<ParticleSystem>();
+        _ExplosionAudio = _ExplosionParticles.GetComponent<AudioSource>();
+        _TankInformation = GetComponent<TankInformation>();
+        _PlayerStats = GetComponent<PlayerStats>();
+        
+        _ExplosionParticles.gameObject.SetActive(false);
+        
+        _StartingHealth = ConfigurationUtil.StartingHealth;
 
-        m_ExplosionParticles.gameObject.SetActive(false);
+        if (_TankInformation._IsPlayer)
+        {
+            _FullHealthColor = Color.green;  
+            _ZeroHealthColor = Color.red; 
+        }
+        else
+        {
+            _FullHealthColor = Color.magenta;  
+            _ZeroHealthColor = Color.red; 
+        }
     }
-
+    
 
     private void OnEnable()
     {
-        m_CurrentHealth = m_StartingHealth;
-        m_Dead = false;
+        _CurrentHealth = _StartingHealth;
+
+        _IsDead = false;
 
         SetHealthUI();
+    }
+
+    private void Update()
+    {
+        if (_IsPoisoned)
+        {
+            if (poisonedTimer.Finished)
+            {
+                TakeDamage(_PoisonedInfor._PoisonedDamage);
+                _PoisonedInfor._TimesOfPoisoned--;
+                poisonedTimer.Stop();
+
+                if (_PoisonedInfor._TimesOfPoisoned == 0)
+                {
+                    _IsPoisoned = false;
+                    Destroy(gameObject.GetComponent<Timer>());
+                    poisonedTimer = null;
+                }
+                
+                poisonedTimer.Stop();
+                poisonedTimer.Duration = 1;
+                poisonedTimer.Run();
+            }
+        }
+        
+        if (_TankInformation._IsPlayer)
+        {
+            _CurrentHealth = _PlayerStats.HP;
+            SetHealthUI ();
+        }
     }
 
     public void TakeDamage(float amount)
     {
         // Reduce current health by the amount of damage done.
-        m_CurrentHealth -= amount;
+        _CurrentHealth -= amount;
+        if (_TankInformation._IsPlayer)
+        {
+            PlayerStats playerStats = GetComponent<PlayerStats>();
+            playerStats.HP = (int)_CurrentHealth;
+        }
 
         // Change the UI elements appropriately.
         SetHealthUI ();
 
         // If the current health is at or below zero and it has not yet been registered, call OnDeath.
-        if (m_CurrentHealth <= 0f && !m_Dead)
+        if (_CurrentHealth <= 0f && !_IsDead)
         {
             OnDeath ();
         }
     }
 
-
     private void SetHealthUI()
     {
         // Set the slider's value appropriately.
-        m_Slider.value = m_CurrentHealth;
+        _Slider.value = _CurrentHealth;
 
         // Interpolate the color of the bar between the choosen colours based on the current percentage of the starting health.
-        m_FillImage.color = Color.Lerp (m_ZeroHealthColor, m_FullHealthColor, m_CurrentHealth / m_StartingHealth);
+        _FillImage.color = Color.Lerp (_ZeroHealthColor, _FullHealthColor, _CurrentHealth / _StartingHealth);
     
     }
-
-
+    
     private void OnDeath()
     {
         // Set the flag so that this function is only called once.
-        m_Dead = true;
+        _IsDead = true;
 
-        // Move the instantiated explosion prefab to the tank's position and turn it on.
-        m_ExplosionParticles.transform.position = transform.position;
-        m_ExplosionParticles.gameObject.SetActive (true);
+        // Play explosion and audio
+        PlayExplosionEffect();
 
-        // Play the particle system of the tank exploding.
-        m_ExplosionParticles.Play ();
-
-        // Play the tank explosion sound effect.
-        m_ExplosionAudio.Play();
-
+        if (_TankInformation._IsPlayer)
+        {
+            this.GetComponent<PlayerStats>().HP = 0;
+        }
+        
         // Turn the tank off.
         gameObject.SetActive (false);
+    }
+
+    private void PlayExplosionEffect()
+    {
+        // Move the instantiated explosion prefab to the tank's position and turn it on.
+        _ExplosionParticles.transform.position = transform.position;
+        _ExplosionParticles.gameObject.SetActive (true);
+
+        // Play the particle system of the tank exploding.
+        _ExplosionParticles.Play ();
+
+        // Play the tank explosion sound effect.
+        _ExplosionAudio.Play();
+    }
+
+    public void SetIsPoisoned(bool isPoisoned = true)
+    {
+        this._IsPoisoned = isPoisoned;
+
+        if (isPoisoned == true)
+        {
+            poisonedTimer = this.gameObject.AddComponent<Timer>();
+            poisonedTimer.Duration = 1;
+            poisonedTimer.Run();
+        }
     }
 }
