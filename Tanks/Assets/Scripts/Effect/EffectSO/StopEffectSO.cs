@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [CreateAssetMenu(fileName = "New Stop Effect", menuName = "Effects/Stop Effect")]
-public class StopEffect : EffectSO
+public class StopEffectSO : EffectSO
 {
     public override EffectState AddEffectState(GameObject go)
     {

@@ -19,8 +19,6 @@ public class PoisonedEffectState : EffectState
 
     protected override void Update()
     {
-        Debug.Log("PoisonEffect time remain: " + _interval.SecondsLeft);
-        
         if (_duration.Finished)
         {
             TurnOn();
@@ -34,13 +32,10 @@ public class PoisonedEffectState : EffectState
     protected override void TurnOn()
     {
         this.gameObject.GetComponent<TankHealth>().TakeDamage(damage);
-        
-        Debug.Log("PoisonEffect: ON");
     }
 
     protected override void TurnOff()
     {
-        Debug.Log("PoisonEffect: OFF");
         Destroy(gameObject.GetComponent<PoisonedEffectState>());
         
     }

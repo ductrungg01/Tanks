@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Silent Effect", menuName = "Effects/Silent Effect")]
-public class SilentEffect : EffectSO
+public class SilentEffectSO : EffectSO
 {
     public override EffectState AddEffectState(GameObject go)
     {

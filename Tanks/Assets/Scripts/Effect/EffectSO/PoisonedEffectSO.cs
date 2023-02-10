@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Poison Effect", menuName = "Effects/Poison Effect")]
-public class PoisonedEffect : EffectSO
+public class PoisonedEffectSO : EffectSO
 {
     public float durationTime;
     public float damage;

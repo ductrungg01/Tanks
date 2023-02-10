@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
     [CreateAssetMenu(fileName = "New Slowdown Effect", menuName = "Effects/Slowdown Effect")]
-public class SlowdownEffect : EffectSO
+public class SlowdownEffectSO : EffectSO
 {
     public float _slowdownSpeed;
 
