@@ -63,8 +63,9 @@ public class Skill : MonoBehaviour
     }
     void Skill3()
     {
-        StopEffectForEnemy stopEffectForEnemy = new StopEffectForEnemy(true, EnemyManager.Instance.EnemyInstanceList, 10);
-        stopEffectForEnemy.TurnOn();
+        // TODO: add effect for all enemy instead of add oll enemy for effect
+        // StopEffect stopEffectForEnemy = new StopEffect(EnemyManager.Instance.EnemyInstanceList, 10);
+        // stopEffectForEnemy.TurnOn();
     }
 
     #endregion

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class SuperArroundShooting : IShootingMethod
 {
-    public ShootingType _Type = ShootingType.SuperArround;
 
     // TODO: This is the stupid method, need to change
     private List<Vector3> pos = new List<Vector3>()
@@ -30,10 +29,6 @@ public class SuperArroundShooting : IShootingMethod
         new Vector3(-15, 2.0f, 0),
     };
     
-    public ShootingType Type()
-    {
-        return _Type;
-    }
 
     public void Fire(Vector3 position, Quaternion rotation, Vector3 velocity)
     {
