@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class StunnedShooting : IShootingMethod
 {
-    public ShootingType _Type = ShootingType.Stunned;
     private float _ForceBuffer = 1f;
-
-    public ShootingType Type()
-    {
-        return _Type;
-    }
+    
     
     public void Fire(Vector3 position, Quaternion rotation, Vector3 velocity)
     {

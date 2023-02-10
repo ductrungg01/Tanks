@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class ShootingCommander : MonoBehaviour
 {
-    public List<IShootingMethod> ShootingMethodList = new List<IShootingMethod>();
+    private List<IShootingMethod> ShootingMethodList = new List<IShootingMethod>();
 
-    public void Fire(ShootingType type, Vector3 pos, Quaternion rotation,  Vector3 velocity)
+    public void Fire(Vector3 pos, Quaternion rotation,  Vector3 velocity)
     {
         foreach (var method in ShootingMethodList)
         {
-            if (method.Type() == type)
-            {
-                method.Fire(pos, rotation, velocity);
-            }
+            // TODO: detect the right shooting
+            method.Fire(pos, rotation, velocity);
         }
     }
 

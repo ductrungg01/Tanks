@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class PoisonedShooting : IShootingMethod
 {
-    public ShootingType _Type = ShootingType.Poisoned;
     private float _ForceBuffer = 1f;
-
-    public ShootingType Type()
-    {
-        return _Type;
-    }
     
     public void Fire(Vector3 position, Quaternion rotation, Vector3 velocity)
     {

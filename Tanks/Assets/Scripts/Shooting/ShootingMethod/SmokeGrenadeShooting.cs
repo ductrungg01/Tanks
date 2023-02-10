@@ -5,12 +5,6 @@ using UnityEngine.TextCore.Text;
 
 public class SmokeGrenadeShooting : IShootingMethod
 {
-    public ShootingType _Type = ShootingType.SmokeGrenade;
-    public ShootingType Type()
-    {
-        return _Type;
-    }
-
     public void Fire(Vector3 position, Quaternion rotation, Vector3 velocity)
     {
         GameObject bullet = PoolManager.Instance.smokeGrenadePooler.OnTakeFromPool(position, rotation);
@@ -20,8 +14,10 @@ public class SmokeGrenadeShooting : IShootingMethod
         {
             SmokeGrenadeExplosion bulletExp = bullet.GetComponent<SmokeGrenadeExplosion>();
             bulletExp.TurnOn();
-            StopEffectForEnemy stopEffectForEnemy = new StopEffectForEnemy(false, EnemyManager.Instance.EnemyInstanceList, 10);
-            stopEffectForEnemy.TurnOn();
+            
+            // TODO: add effect for all enemy instead of add oll enemy for effect
+            // StopEffect stopEffectForEnemy = new StopEffect( EnemyManager.Instance.EnemyInstanceList, 10);
+            // stopEffectForEnemy.TurnOn();
         }
         else
         {

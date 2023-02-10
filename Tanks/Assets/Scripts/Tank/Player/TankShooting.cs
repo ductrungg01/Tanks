@@ -20,8 +20,7 @@ public class TankShooting : MonoBehaviour
     private bool _Fired;
 
     private TankInformation _TankInformation;
-
-    public ShootingType typeInUse;
+    
     private ShootingCommander _ShootingCommander;
 
     private Timer _TimerForMachineGun;
@@ -57,235 +56,237 @@ public class TankShooting : MonoBehaviour
 
     private void Update()
     {
-        if (_TankInformation._IsPlayer)
-        {
-            switch (typeInUse)
-            {
-                case ShootingType.Rocket:
-                {
-                    _AimSlider.value = _MinLaunchForce;
-
-                    if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
-                    {
-                        _CurrentLaunchForce = _MaxLaunchForce;
-                        _Fired = true;
-                        Fire();
-                    }
-                    else if (Input.GetButtonDown(_FireButton))
-                    {
-                        _Fired = false;
-                        _CurrentLaunchForce = _MinLaunchForce;
-
-                        _ShootingAudio.clip = _ChargingClip;
-                        _ShootingAudio.Play();
-                    }
-                    else if (Input.GetButton(_FireButton) && !_Fired)
-                    {
-                        _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
-
-                        _AimSlider.value = _CurrentLaunchForce;
-                    }
-                    else if (Input.GetButtonUp(_FireButton) && !_Fired)
-                    {
-                        _Fired = true;
-                        Fire();
-                    }
-                    
-                    break;
-                }
-                case ShootingType.MachineGun:
-                {
-                    if (Input.GetButton(_FireButton) && _TimerForMachineGun.Finished)
-                    {
-                        _TimerForMachineGun.Stop();
-                        Fire();
-                        _TimerForMachineGun.Run();
-                    }
-                    break;
-                }
-                case ShootingType.SmokeGrenade:
-                {
-                    if (Input.GetButton(_FireButton))
-                    {
-                        Fire();
-                    }
-
-                    break;
-                }
-                case ShootingType.SuperArround:
-                {
-                    if (Input.GetButtonUp(_FireButton))
-                    {
-                        _ShootingCommander.Fire(typeInUse,this.transform.position, _FireTransform.rotation, _FireTransform.forward);
-                    }
-                    break;
-                }
-                case ShootingType.Silent:
-                {
-                    _AimSlider.value = _MinLaunchForce;
-
-                    if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
-                    {
-                        _CurrentLaunchForce = _MaxLaunchForce;
-                        _Fired = true;
-                        Fire();
-                    }
-                    else if (Input.GetButtonDown(_FireButton))
-                    {
-                        _Fired = false;
-                        _CurrentLaunchForce = _MinLaunchForce;
-
-                        _ShootingAudio.clip = _ChargingClip;
-                        _ShootingAudio.Play();
-                    }
-                    else if (Input.GetButton(_FireButton) && !_Fired)
-                    {
-                        _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
-
-                        _AimSlider.value = _CurrentLaunchForce;
-                    }
-                    else if (Input.GetButtonUp(_FireButton) && !_Fired)
-                    {
-                        _Fired = true;
-                        Fire();
-                    }
-                    
-                    break;
-                }
-                case ShootingType.Stunned:
-                {
-                    _AimSlider.value = _MinLaunchForce;
-
-                    if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
-                    {
-                        _CurrentLaunchForce = _MaxLaunchForce;
-                        _Fired = true;
-                        Fire();
-                    }
-                    else if (Input.GetButtonDown(_FireButton))
-                    {
-                        _Fired = false;
-                        _CurrentLaunchForce = _MinLaunchForce;
-
-                        _ShootingAudio.clip = _ChargingClip;
-                        _ShootingAudio.Play();
-                    }
-                    else if (Input.GetButton(_FireButton) && !_Fired)
-                    {
-                        _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
-
-                        _AimSlider.value = _CurrentLaunchForce;
-                    }
-                    else if (Input.GetButtonUp(_FireButton) && !_Fired)
-                    {
-                        _Fired = true;
-                        Fire();
-                    }
-                    
-                    break;
-                }
-                case ShootingType.Slowdown:
-                {
-                    _AimSlider.value = _MinLaunchForce;
-
-                    if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
-                    {
-                        _CurrentLaunchForce = _MaxLaunchForce;
-                        _Fired = true;
-                        Fire();
-                    }
-                    else if (Input.GetButtonDown(_FireButton))
-                    {
-                        _Fired = false;
-                        _CurrentLaunchForce = _MinLaunchForce;
-
-                        _ShootingAudio.clip = _ChargingClip;
-                        _ShootingAudio.Play();
-                    }
-                    else if (Input.GetButton(_FireButton) && !_Fired)
-                    {
-                        _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
-
-                        _AimSlider.value = _CurrentLaunchForce;
-                    }
-                    else if (Input.GetButtonUp(_FireButton) && !_Fired)
-                    {
-                        _Fired = true;
-                        Fire();
-                    }
-                    
-                    break;
-                }
-                case ShootingType.Stop:
-                {
-                    _AimSlider.value = _MinLaunchForce;
-
-                    if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
-                    {
-                        _CurrentLaunchForce = _MaxLaunchForce;
-                        _Fired = true;
-                        Fire();
-                    }
-                    else if (Input.GetButtonDown(_FireButton))
-                    {
-                        _Fired = false;
-                        _CurrentLaunchForce = _MinLaunchForce;
-
-                        _ShootingAudio.clip = _ChargingClip;
-                        _ShootingAudio.Play();
-                    }
-                    else if (Input.GetButton(_FireButton) && !_Fired)
-                    {
-                        _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
-
-                        _AimSlider.value = _CurrentLaunchForce;
-                    }
-                    else if (Input.GetButtonUp(_FireButton) && !_Fired)
-                    {
-                        _Fired = true;
-                        Fire();
-                    }
-                    
-                    break;
-                }
-                case ShootingType.Poisoned:
-                {
-                    _AimSlider.value = _MinLaunchForce;
-
-                    if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
-                    {
-                        _CurrentLaunchForce = _MaxLaunchForce;
-                        _Fired = true;
-                        Fire();
-                    }
-                    else if (Input.GetButtonDown(_FireButton))
-                    {
-                        _Fired = false;
-                        _CurrentLaunchForce = _MinLaunchForce;
-
-                        _ShootingAudio.clip = _ChargingClip;
-                        _ShootingAudio.Play();
-                    }
-                    else if (Input.GetButton(_FireButton) && !_Fired)
-                    {
-                        _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
-
-                        _AimSlider.value = _CurrentLaunchForce;
-                    }
-                    else if (Input.GetButtonUp(_FireButton) && !_Fired)
-                    {
-                        _Fired = true;
-                        Fire();
-                    }
-                    
-                    break;
-                }
-            }
-        }
+        // TODO: find another way to do this implementation
+        // if (_TankInformation._IsPlayer)
+        // {
+        //     switch (typeInUse)
+        //     {
+        //         case ShootingType.Rocket:
+        //         {
+        //             _AimSlider.value = _MinLaunchForce;
+        //
+        //             if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
+        //             {
+        //                 _CurrentLaunchForce = _MaxLaunchForce;
+        //                 _Fired = true;
+        //                 Fire();
+        //             }
+        //             else if (Input.GetButtonDown(_FireButton))
+        //             {
+        //                 _Fired = false;
+        //                 _CurrentLaunchForce = _MinLaunchForce;
+        //
+        //                 _ShootingAudio.clip = _ChargingClip;
+        //                 _ShootingAudio.Play();
+        //             }
+        //             else if (Input.GetButton(_FireButton) && !_Fired)
+        //             {
+        //                 _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
+        //
+        //                 _AimSlider.value = _CurrentLaunchForce;
+        //             }
+        //             else if (Input.GetButtonUp(_FireButton) && !_Fired)
+        //             {
+        //                 _Fired = true;
+        //                 Fire();
+        //             }
+        //             
+        //             break;
+        //         }
+        //         case ShootingType.MachineGun:
+        //         {
+        //             if (Input.GetButton(_FireButton) && _TimerForMachineGun.Finished)
+        //             {
+        //                 _TimerForMachineGun.Stop();
+        //                 Fire();
+        //                 _TimerForMachineGun.Run();
+        //             }
+        //             break;
+        //         }
+        //         case ShootingType.SmokeGrenade:
+        //         {
+        //             if (Input.GetButton(_FireButton))
+        //             {
+        //                 Fire();
+        //             }
+        //
+        //             break;
+        //         }
+        //         case ShootingType.SuperArround:
+        //         {
+        //             if (Input.GetButtonUp(_FireButton))
+        //             {
+        //                 _ShootingCommander.Fire(typeInUse,this.transform.position, _FireTransform.rotation, _FireTransform.forward);
+        //             }
+        //             break;
+        //         }
+        //         case ShootingType.Silent:
+        //         {
+        //             _AimSlider.value = _MinLaunchForce;
+        //
+        //             if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
+        //             {
+        //                 _CurrentLaunchForce = _MaxLaunchForce;
+        //                 _Fired = true;
+        //                 Fire();
+        //             }
+        //             else if (Input.GetButtonDown(_FireButton))
+        //             {
+        //                 _Fired = false;
+        //                 _CurrentLaunchForce = _MinLaunchForce;
+        //
+        //                 _ShootingAudio.clip = _ChargingClip;
+        //                 _ShootingAudio.Play();
+        //             }
+        //             else if (Input.GetButton(_FireButton) && !_Fired)
+        //             {
+        //                 _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
+        //
+        //                 _AimSlider.value = _CurrentLaunchForce;
+        //             }
+        //             else if (Input.GetButtonUp(_FireButton) && !_Fired)
+        //             {
+        //                 _Fired = true;
+        //                 Fire();
+        //             }
+        //             
+        //             break;
+        //         }
+        //         case ShootingType.Stunned:
+        //         {
+        //             _AimSlider.value = _MinLaunchForce;
+        //
+        //             if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
+        //             {
+        //                 _CurrentLaunchForce = _MaxLaunchForce;
+        //                 _Fired = true;
+        //                 Fire();
+        //             }
+        //             else if (Input.GetButtonDown(_FireButton))
+        //             {
+        //                 _Fired = false;
+        //                 _CurrentLaunchForce = _MinLaunchForce;
+        //
+        //                 _ShootingAudio.clip = _ChargingClip;
+        //                 _ShootingAudio.Play();
+        //             }
+        //             else if (Input.GetButton(_FireButton) && !_Fired)
+        //             {
+        //                 _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
+        //
+        //                 _AimSlider.value = _CurrentLaunchForce;
+        //             }
+        //             else if (Input.GetButtonUp(_FireButton) && !_Fired)
+        //             {
+        //                 _Fired = true;
+        //                 Fire();
+        //             }
+        //             
+        //             break;
+        //         }
+        //         case ShootingType.Slowdown:
+        //         {
+        //             _AimSlider.value = _MinLaunchForce;
+        //
+        //             if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
+        //             {
+        //                 _CurrentLaunchForce = _MaxLaunchForce;
+        //                 _Fired = true;
+        //                 Fire();
+        //             }
+        //             else if (Input.GetButtonDown(_FireButton))
+        //             {
+        //                 _Fired = false;
+        //                 _CurrentLaunchForce = _MinLaunchForce;
+        //
+        //                 _ShootingAudio.clip = _ChargingClip;
+        //                 _ShootingAudio.Play();
+        //             }
+        //             else if (Input.GetButton(_FireButton) && !_Fired)
+        //             {
+        //                 _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
+        //
+        //                 _AimSlider.value = _CurrentLaunchForce;
+        //             }
+        //             else if (Input.GetButtonUp(_FireButton) && !_Fired)
+        //             {
+        //                 _Fired = true;
+        //                 Fire();
+        //             }
+        //             
+        //             break;
+        //         }
+        //         case ShootingType.Stop:
+        //         {
+        //             _AimSlider.value = _MinLaunchForce;
+        //
+        //             if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
+        //             {
+        //                 _CurrentLaunchForce = _MaxLaunchForce;
+        //                 _Fired = true;
+        //                 Fire();
+        //             }
+        //             else if (Input.GetButtonDown(_FireButton))
+        //             {
+        //                 _Fired = false;
+        //                 _CurrentLaunchForce = _MinLaunchForce;
+        //
+        //                 _ShootingAudio.clip = _ChargingClip;
+        //                 _ShootingAudio.Play();
+        //             }
+        //             else if (Input.GetButton(_FireButton) && !_Fired)
+        //             {
+        //                 _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
+        //
+        //                 _AimSlider.value = _CurrentLaunchForce;
+        //             }
+        //             else if (Input.GetButtonUp(_FireButton) && !_Fired)
+        //             {
+        //                 _Fired = true;
+        //                 Fire();
+        //             }
+        //             
+        //             break;
+        //         }
+        //         case ShootingType.Poisoned:
+        //         {
+        //             _AimSlider.value = _MinLaunchForce;
+        //
+        //             if (_CurrentLaunchForce >= _MaxLaunchForce && !_Fired)
+        //             {
+        //                 _CurrentLaunchForce = _MaxLaunchForce;
+        //                 _Fired = true;
+        //                 Fire();
+        //             }
+        //             else if (Input.GetButtonDown(_FireButton))
+        //             {
+        //                 _Fired = false;
+        //                 _CurrentLaunchForce = _MinLaunchForce;
+        //
+        //                 _ShootingAudio.clip = _ChargingClip;
+        //                 _ShootingAudio.Play();
+        //             }
+        //             else if (Input.GetButton(_FireButton) && !_Fired)
+        //             {
+        //                 _CurrentLaunchForce += _ChargeSpeed * Time.deltaTime;
+        //
+        //                 _AimSlider.value = _CurrentLaunchForce;
+        //             }
+        //             else if (Input.GetButtonUp(_FireButton) && !_Fired)
+        //             {
+        //                 _Fired = true;
+        //                 Fire();
+        //             }
+        //             
+        //             break;
+        //         }
+        //     }
+        // }
     }
     
     private void Fire()
     {
-        _ShootingCommander.Fire(typeInUse,_FireTransform.position, _FireTransform.rotation, _CurrentLaunchForce * _FireTransform.forward);
+        // TODO: fix this bug
+        //_ShootingCommander.Fire(typeInUse,_FireTransform.position, _FireTransform.rotation, _CurrentLaunchForce * _FireTransform.forward);
     }
 }

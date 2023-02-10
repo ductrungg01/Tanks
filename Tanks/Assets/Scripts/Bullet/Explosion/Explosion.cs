@@ -9,12 +9,12 @@ public abstract class Explosion : MonoBehaviour
     public LayerMask _TankMask;
     public ParticleSystem _ExplosionParticles;       
     public AudioSource _ExplosionAudio;              
-    protected float maxDamage;                  
-    protected float _ExplosionForce = 0;
-    protected float _MaxLifeTime = 3f;
-    protected float _ExplosionRadius = 5f;
+    public float maxDamage;                  
+    public float _ExplosionForce = 0;
+    public float _MaxLifeTime = 3f;
+    public float _ExplosionRadius = 5f;
 
-    public List<EffectBase> _Effects = new List<EffectBase>();
+    public List<EffectSO> _Effects = new List<EffectSO>();
     #endregion
 
     protected abstract void Start();
@@ -58,8 +58,9 @@ public abstract class Explosion : MonoBehaviour
             // Do effects
             foreach (var e in _Effects)
             {
-                e.targets.Add(colliders[i].gameObject);
-                e.TurnOn();
+                // TODO: apply the effect for the targets
+                //e.targets.Add(colliders[i].gameObject);
+                //e.TurnOn(colliders[i].gameObject);
             }
         }
 
