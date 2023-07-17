@@ -68,7 +68,10 @@ public class ObjectPooler : MonoBehaviour
     {
         await UniTask.Delay(TimeSpan.FromSeconds(delayTimeInSecond));
 
-        go.transform.parent = _CollapsePollerGO.transform;
-        go.SetActive(false);
+        if (go.gameObject != null)
+        {
+            go.transform.parent = _CollapsePollerGO.transform;
+            go.SetActive(false);
+        }
     }
 }

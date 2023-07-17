@@ -16,7 +16,7 @@ namespace Complete
         private void Start ()
         {
             // If it isn't destroyed by then, destroy the shell after it's lifetime.
-            Destroy (gameObject, m_MaxLifeTime);
+            PoolManager.Instance.shellPooler.OnReturnToPool(this.gameObject, m_MaxLifeTime);
         }
 
 
@@ -66,7 +66,7 @@ namespace Complete
             Destroy (m_ExplosionParticles.gameObject, mainModule.duration);
 
             // Destroy the shell.
-            Destroy (gameObject);
+            PoolManager.Instance.shellPooler.OnReturnToPool(this.gameObject);
         }
 
 

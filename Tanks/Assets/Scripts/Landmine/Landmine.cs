@@ -43,7 +43,7 @@ public class Landmine : MonoBehaviour
         
             _ExplosionAudio.Play();
             
-            Destroy(gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 }
